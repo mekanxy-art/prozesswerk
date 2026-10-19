@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.tests.json",
+  "compilerOptions": { "outDir": "local-data/tool-build" },
+  "include": ["scripts/*.ts"],
+  "exclude": ["node_modules"]
+}

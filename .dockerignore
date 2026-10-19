@@ -1,0 +1,11 @@
+node_modules
+.next
+.next-*
+.env
+.env.*
+!.env.example
+local-data
+test-results
+playwright-report
+.git
+*.zip
