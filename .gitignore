@@ -20,3 +20,4 @@ local-data/
 *.pfx
 .DS_Store
 Thumbs.db
+demo-export/

@@ -18,7 +18,8 @@
     "admin:create": "npm run tools:build && node local-data/tool-build/scripts/create-admin.js",
     "worker": "npm run tools:build && node local-data/tool-build/scripts/worker.js",
     "retention": "npm run tools:build && node local-data/tool-build/scripts/retention.js",
-    "launch:check": "npm run tools:build && node local-data/tool-build/scripts/launch-check.js"
+    "launch:check": "npm run tools:build && node local-data/tool-build/scripts/launch-check.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",

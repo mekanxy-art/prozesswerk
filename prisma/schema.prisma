@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+enum LeadStatus {
+  NEW
+  QUALIFIED
+  CONTACTED
+  WON
+  CLOSED
+}
+enum JobKind {
+  INTERNAL_MAIL
+  RECEIPT_MAIL
+  WEBHOOK
+  DOUBLE_OPT_IN
+}
+model Lead {
+  id String @id @default(cuid())
+  requestKey String @unique
+  name String
+  company String
+  email String
+  phone String?
+  size String
+  process String
+  challenge String
+  budget String?
+  contactWay String
+  source String
+  purpose String @default("Bearbeitung einer Prozessanalyse-Anfrage")
+  privacyVersion String @default("2026-10-17")
+  marketingRequested Boolean @default(false)
+  marketingConfirmedAt DateTime?
+  marketingTokenHash String? @unique
+  marketingTokenExpires DateTime?
+  objectionAt DateTime?
+  suppressed Boolean @default(false)
+  status LeadStatus @default(NEW)
+  lastContactAt DateTime?
+  nextFollowUpAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  jobs Outbox[]
+  activities Activity[]
+  @@index([status, createdAt])
+  @@index([email])
+}
+model Outbox {
+  id String @id @default(cuid())
+  leadId String
+  lead Lead @relation(fields:[leadId], references:[id], onDelete:Cascade)
+  kind JobKind
+  attempts Int @default(0)
+  availableAt DateTime @default(now())
+  lockedUntil DateTime?
+  claimToken String?
+  sentAt DateTime?
+  failedAt DateTime?
+  errorCode String?
+  createdAt DateTime @default(now())
+  @@unique([leadId, kind])
+  @@index([sentAt, availableAt])
+}
+model Admin {
+  id String @id @default(cuid())
+  email String @unique
+  passwordHash String
+  role String @default("ADMIN")
+  sessions Session[]
+}
+model Session {
+  id String @id
+  adminId String
+  admin Admin @relation(fields:[adminId], references:[id], onDelete:Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+model Activity {
+  id String @id @default(cuid())
+  leadId String?
+  lead Lead? @relation(fields:[leadId], references:[id], onDelete:Cascade)
+  actor String
+  type String
+  note String?
+  createdAt DateTime @default(now())
+  @@index([leadId, createdAt])
+}
+model RateBucket {
+  key String @id
+  count Int @default(1)
+  expiresAt DateTime
+  @@index([expiresAt])
+}
+model WebhookReceipt {
+  eventId String @id
+  receivedAt DateTime @default(now())
+}

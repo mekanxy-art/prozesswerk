@@ -50,6 +50,8 @@ Die Website präsentiert diese Leistungen. Sie ist selbst **kein Shopify-Shop, k
 | Optionale Zustellung | Resend sowie HMAC-signierte Webhooks für einen n8n-Empfänger |
 | Qualität             | TypeScript, ESLint, Node-Test-Runner, Playwright, axe-core   |
 
+[Hinweise zur statischen Portfolio-Demo](docs/DEMO.md). Ein öffentlicher Demo-Link wird erst nach erfolgreicher Veröffentlichung ergänzt.
+
 Die genauen Abhängigkeiten sind im [Lockfile](package-lock.json) festgehalten.
 
 ## Lokal starten
@@ -159,3 +161,7 @@ Dieses Repository dokumentiert das entstandene Projekt und seine überprüften E
 - [Herkunft und Nutzungsrechte](RIGHTS.md)
 
 Es wurde noch keine eigene Open-Source-Lizenz vergeben. Abhängigkeiten behalten ihre jeweiligen Lizenzen. Die Sichtbarkeit eines Repositorys ersetzt keine Nutzungslizenz.
+
+## Repository-Prüfung vom 23.10.2026
+
+Der vollständige Projektstand wurde mit frisch installierten npm-Abhängigkeiten geprüft. Die automatische Prisma-Client-Erzeugung ist über `postinstall` hinterlegt. Typprüfung, Lint, 10 Unit-/Sicherheitstests, Produktionsbuild und 13 öffentliche Browsertests bestanden lokal. Die vier isolierten Formular-Fehlertests und Datenbank-Integrationstests wurden bei diesem Lauf nicht wiederholt. GitHub-Actions-Ergebnisse gelten jeweils für den dort geprüften Commit.

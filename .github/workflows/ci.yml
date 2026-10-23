@@ -1,0 +1,66 @@
+name: Quality checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+      DATABASE_URL: postgresql://preview:preview@127.0.0.1:1/unavailable
+      APP_ORIGIN: http://127.0.0.1:3000
+      SITE_URL: http://127.0.0.1:3000
+      TEST_BASE_URL: http://127.0.0.1:3000
+      TEST_BROWSER_CHANNEL: chromium
+      DELIVERY_ENABLED: "false"
+      SITE_INDEXABLE: "false"
+      ALLOW_DATABASE_TESTS: "false"
+      # FORM_SECRET intentionally absent: public tests expect a disabled form.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start preview and wait for readiness
+        shell: bash
+        run: |
+          npm start > "$RUNNER_TEMP/prozesswerk-server.log" 2>&1 &
+          for attempt in {1..60}; do
+            if curl --fail --silent "$TEST_BASE_URL/" > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/prozesswerk-server.log"
+          exit 1
+      - name: Test public pages and accessibility
+        run: npm run test:e2e -- tests/e2e/design.spec.ts tests/e2e/offering.spec.ts tests/e2e/studio.spec.ts tests/e2e/motion.spec.ts tests/e2e/master.spec.ts
+      - name: Preserve failure reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-preview-failure
+          path: |
+            playwright-report/
+            test-results/
+            ${{ runner.temp }}/prozesswerk-server.log
+          retention-days: 7
