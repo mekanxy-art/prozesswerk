@@ -30,7 +30,7 @@ jobs:
       # FORM_SECRET intentionally absent: public tests expect a disabled form.
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -102,7 +102,7 @@ jobs:
       RATE_LIMIT_SECRET: ci-only-rate-secret-not-for-production-456
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
