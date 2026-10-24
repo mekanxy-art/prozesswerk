@@ -19,7 +19,11 @@ export default async function Preferences({
     await checkOrigin();
     const id = String(form.get("id") || "");
     const token = String(form.get("token") || "");
-    if (!equal(token, preferenceToken(id)))
+    if (
+      !/^c[a-z0-9]{24}$/.test(id) ||
+      !/^[a-f0-9]{64}$/.test(token) ||
+      !equal(token, preferenceToken(id))
+    )
       redirect("/einstellungen?fertig=ungueltig");
     await db.$transaction(async (tx) => {
       const changed = await tx.lead.updateMany({
@@ -50,13 +54,15 @@ export default async function Preferences({
               : "Sie können Ihre optionale Marketingeinwilligung hier jederzeit widerrufen."}
         </p>
       </div>
-      {!q.fertig && q.id && q.token && (
-        <form action={withdraw}>
-          <input type="hidden" name="id" value={q.id} />
-          <input type="hidden" name="token" value={q.token} />
-          <button className="button">Einwilligung widerrufen</button>
-        </form>
-      )}
+      {!q.fertig &&
+        /^c[a-z0-9]{24}$/.test(q.id || "") &&
+        /^[a-f0-9]{64}$/.test(q.token || "") && (
+          <form action={withdraw}>
+            <input type="hidden" name="id" value={q.id} />
+            <input type="hidden" name="token" value={q.token} />
+            <button className="button">Einwilligung widerrufen</button>
+          </form>
+        )}
       <p className="small">
         Für sonstige Datenschutzanliegen finden Sie den Kontakt in den{" "}
         <a href="/datenschutz">Datenschutzhinweisen</a>.

@@ -126,7 +126,7 @@ export const serviceGroups = [
   {
     href: "/leistungen/websites-sichtbarkeit",
     title: "Websites & Online-Shops",
-    promise: "Websites und Shops, die Ihr Angebot verständlich machen.",
+    promise: "Ein Auftritt, der zu Ihnen passt.",
     text: "Wir erstellen Websites und Shopify-Shops, verbessern bestehende Auftritte und begleiten den Wechsel zu Shopify.",
     links: [
       ["/leistungen/website-erstellung", "Website erstellen"],
@@ -143,7 +143,7 @@ export const serviceGroups = [
   {
     href: "/leistungen/prozesse-automatisierung",
     title: "Prozesse & Automatisierung",
-    promise: "Weniger Handarbeit. Klarere Abläufe.",
+    promise: "Ein Alltag mit weniger Handarbeit.",
     text: "Wir verbessern und automatisieren Ihre Abläufe – vom Eingang einer Anfrage bis zur Übergabe an Ihr Team. Analyse und Systemanbindung gehören dazu.",
     links: [
       [
@@ -157,7 +157,7 @@ export const serviceGroups = [
 export const offeringPages: Record<string, PageContent> = {
   ...Object.fromEntries(shopifyOffers.map((o) => [o.href.slice(1), o.page])),
   leistungen: {
-    title: "Digital besser aufgestellt. Außen wie innen.",
+    title: "Websites & Abläufe.",
     description:
       "Websites und Shopify-Shops erstellen, zu Shopify wechseln, Sichtbarkeit verbessern und Geschäftsprozesse verbinden.",
     label: "UNSERE LEISTUNGEN",
@@ -226,7 +226,7 @@ export const offeringPages: Record<string, PageContent> = {
     ],
   },
   "leistungen/prozesse-automatisierung": {
-    title: "Weniger Handarbeit. Klarere Abläufe.",
+    title: "Ein Alltag mit weniger Handarbeit.",
     description:
       "Prozesse verbessern und automatisieren: Anfragen und Vertrieb, Dokumente und Angebote sowie Kunden-Onboarding als konkrete Einsatzmöglichkeiten.",
     label: "PROZESSE VERBESSERN & AUTOMATISIEREN",

@@ -2,6 +2,7 @@ FROM node:22-bookworm-slim AS build
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY package*.json ./
+COPY prisma ./prisma
 RUN npm ci
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1 BUILD_STANDALONE=true

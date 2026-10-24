@@ -23,7 +23,7 @@ test("scroll decoration never hides content and keyboard focus remains usable", 
   await expect(second).toHaveCSS("opacity", "1");
 });
 
-test("reduced motion clears pending reveals and the moving text can be paused", async ({
+test("reduced motion clears pending reveals and the workflow comparison stays usable", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 600 });
@@ -35,15 +35,23 @@ test("reduced motion clears pending reveals and the moving text can be paused", 
   await expect(first).toHaveCSS("opacity", "1");
   await page.goto("/");
   await expect(page.locator("[data-reveal]")).toHaveCount(0);
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.getByRole("button", { name: "Lauftext pausieren" }).click();
-  await expect(page.locator(".studio-marquee>div")).toHaveCSS(
-    "animation-play-state",
-    "paused",
-  );
+  await page
+    .getByRole("button", { name: "Heute manuell", exact: true })
+    .click();
   await expect(
-    page.getByRole("button", { name: "Lauftext fortsetzen" }),
+    page.getByRole("button", { name: "Heute manuell", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
+  await expect(
+    page.getByText("Kontakt ins CRM abtippen", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Verbunden", exact: true }).click();
+  await expect(
+    page.getByText("Kontakt & Aufgabe anlegen", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".explorer-diagram")).toHaveCSS(
+    "animation-name",
+    "none",
+  );
 });
 
 test("service content and links remain readable without JavaScript", async ({

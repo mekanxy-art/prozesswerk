@@ -11,6 +11,9 @@ Vor einer öffentlichen Veröffentlichung muss der Projektinhaber bestätigen, d
 - `public/images/connector-mascot-v2.*`: KI-generierte konzeptionelle Maskottchen-Illustration.
 - `public/images/connected-process-v2.*`: KI-generierte Prozessillustration.
 - `docs/screenshots/*`: lokale Aufnahmen dieser Projektwebsite; keine echten Kundendaten.
+- `public/konzepte/*`: eigene HTML-/CSS-Konzepte mit fiktiven Marken „Werkraum“ und „Alltag“, keine Kundenseiten und keine Kaufabwicklung.
+- `public/images/konzept-website.png` und `konzept-shop-final.png`: Aufnahmen dieser eigenen Konzepte.
+- Gestalterische Methoden und Anbieterreferenzen: [TASTE-RECHERCHE.md](docs/TASTE-RECHERCHE.md). Keine fremden Anbieterbilder oder Kundenlogos wurden übernommen.
 - Bildherstellung und damalige Prompts: [DESIGN-V2.md](docs/DESIGN-V2.md).
 
 UNHYDE diente als gestalterische Referenz für den Überarbeitungsprozess. Es besteht keine behauptete Verbindung, Beauftragung oder Empfehlung durch UNHYDE. Diese Angabe ist keine Übertragung von Rechten an dessen Gestaltung oder Inhalten.

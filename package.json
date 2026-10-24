@@ -19,7 +19,12 @@
     "worker": "npm run tools:build && node local-data/tool-build/scripts/worker.js",
     "retention": "npm run tools:build && node local-data/tool-build/scripts/retention.js",
     "launch:check": "npm run tools:build && node local-data/tool-build/scripts/launch-check.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "security:audit": "npm audit --audit-level=moderate",
+    "test:security:browser": "playwright test tests/e2e/security.spec.ts",
+    "test:public": "playwright test tests/e2e/design.spec.ts tests/e2e/offering.spec.ts tests/e2e/studio.spec.ts tests/e2e/motion.spec.ts tests/e2e/master.spec.ts tests/e2e/security.spec.ts",
+    "test:outage": "node scripts/test-outage.mjs",
+    "demo:export": "node scripts/export-demo.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",

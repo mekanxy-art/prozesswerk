@@ -1,5 +1,7 @@
 # Prozesswerk mit Open Design überarbeitet
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 ## Tatsächliche Nutzung der Referenz
 
 Die öffentlich verfügbaren Leitfäden aus [nexu-io/open-design](https://github.com/nexu-io/open-design) wurden direkt für die bestehende Next.js-Website angewandt. Es wurde keine zusätzliche Open-Design-Desktop-App installiert und kein externer KI-Dienst mit Projekt- oder Kundendaten verbunden.

@@ -5,6 +5,7 @@ import "./globals.css";
 import "./design-v2.css";
 import "./studio.css";
 import "./open-design.css";
+import "./taste-local.css";
 import { PageTransitions } from "@/components/site-navigation";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 export const viewport: Viewport = {
-  themeColor: "#143e38",
+  themeColor: "#f3f3ec",
   width: "device-width",
   initialScale: 1,
 };

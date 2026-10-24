@@ -187,7 +187,7 @@ export default async function AdminPage({
                 detail.objectionAt?.toISOString() || "Keiner dokumentiert",
               ],
             ].map(([k, v]) => (
-              <div className="dl-row" style={{ display: "contents" }} key={k}>
+              <div className="dl-row dl-row-contents" key={k}>
                 <dt>{k}</dt>
                 <dd>{v}</dd>
               </div>

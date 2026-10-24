@@ -27,7 +27,7 @@ test("studio navigation supports pages, history, keyboard and reduced motion", a
   await expect(menu).not.toBeVisible();
   await page.goBack();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Websites.Online-Shops.Weniger Routine.",
+    "Digital.Gut verbunden.",
   );
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page

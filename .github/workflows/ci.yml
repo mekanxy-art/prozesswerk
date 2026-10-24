@@ -53,7 +53,9 @@ jobs:
           cat "$RUNNER_TEMP/prozesswerk-server.log"
           exit 1
       - name: Test public pages and accessibility
-        run: npm run test:e2e -- tests/e2e/design.spec.ts tests/e2e/offering.spec.ts tests/e2e/studio.spec.ts tests/e2e/motion.spec.ts tests/e2e/master.spec.ts
+        run: npm run test:public
+      - name: Verify database outage handling
+        run: npm run test:outage
       - name: Preserve failure reports
         if: failure()
         uses: actions/upload-artifact@v4
@@ -63,4 +65,73 @@ jobs:
             playwright-report/
             test-results/
             ${{ runner.temp }}/prozesswerk-server.log
+          retention-days: 7
+
+  backend-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18-bookworm
+        env:
+          POSTGRES_DB: pw_security_test
+          POSTGRES_USER: pw_test
+          POSTGRES_PASSWORD: ephemeral-ci-test-only
+        ports:
+          - 55439:5432
+        options: >-
+          --health-cmd "pg_isready -U pw_test -d pw_security_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+      DATABASE_URL: postgresql://pw_test:ephemeral-ci-test-only@127.0.0.1:55439/pw_security_test?schema=public
+      APP_ORIGIN: http://127.0.0.1:3114
+      SITE_URL: http://127.0.0.1:3114
+      TEST_BASE_URL: http://127.0.0.1:3114
+      PORT: "3114"
+      TEST_BROWSER_CHANNEL: chromium
+      DELIVERY_ENABLED: "false"
+      SITE_INDEXABLE: "false"
+      TRUST_PROXY: "false"
+      ALLOW_DATABASE_TESTS: "true"
+      # Public values exclusively for this temporary, isolated CI database.
+      FORM_SECRET: ci-only-form-secret-not-for-production-123
+      RATE_LIMIT_SECRET: ci-only-rate-secret-not-for-production-456
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run db:deploy
+      - run: npm run test:integration
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start isolated test application
+        shell: bash
+        run: |
+          npm start > "$RUNNER_TEMP/prozesswerk-backend.log" 2>&1 &
+          for attempt in {1..60}; do
+            if curl --fail --silent "$TEST_BASE_URL/api/health" > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/prozesswerk-backend.log"
+          exit 1
+      - name: Test database, permissions and actual form submissions
+        run: npx playwright test tests/e2e/backend-security.spec.ts tests/e2e/site.spec.ts
+      - name: Preserve failure reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-security-failure
+          path: |
+            playwright-report/
+            test-results/
+            ${{ runner.temp }}/prozesswerk-backend.log
           retention-days: 7

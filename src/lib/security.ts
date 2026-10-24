@@ -72,3 +72,26 @@ export function csvCell(value: unknown) {
   const text = String(value ?? "");
   return `"${(/^[\s]*[=+@\-\t\r]/.test(text) ? "'" : "") + text.replaceAll('"', '""')}"`;
 }
+
+/** No production fallback origin: an unconfigured mutation endpoint stays closed. */
+export function originAllowed(
+  origin: string | null,
+  configured: string | undefined,
+  production: boolean,
+) {
+  if (!origin || (production && !configured)) return false;
+  try {
+    const expected = new URL(configured || "http://localhost:3000");
+    if (
+      !["http:", "https:"].includes(expected.protocol) ||
+      expected.username ||
+      expected.password
+    )
+      return false;
+    if (expected.pathname !== "/" || expected.search || expected.hash)
+      return false;
+    return origin === expected.origin;
+  } catch {
+    return false;
+  }
+}

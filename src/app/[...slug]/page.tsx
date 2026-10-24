@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { pages, articles, faq, serviceLinks } from "@/lib/content";
+import {
+  type Section,
+  pages,
+  articles,
+  faq,
+  serviceLinks,
+} from "@/lib/content";
 import { company, safeBooking, siteUrl } from "@/lib/config";
 import { Arrow, Breadcrumbs, CTA, FAQ, JsonLd } from "@/components/ui";
 import { LeadForm } from "@/components/lead-form";
@@ -38,11 +44,14 @@ const special: Record<string, { title: string; description: string }> = {
     description: "Ihre Prozessanalyse-Anfrage wurde gespeichert.",
   },
 };
+const pageIndex = new Map(Object.entries(pages));
+const specialIndex = new Map(Object.entries(special));
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug.join("/");
   const item =
-    pages[slug] ||
-    special[slug] ||
+    pageIndex.get(slug) ||
+    specialIndex.get(slug) ||
     articles.find((a) => `wissen/${a.slug}` === slug);
   if (!item)
     return {
@@ -64,9 +73,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ContentPage({ params, searchParams }: Props) {
   const slug = (await params).slug.join("/");
   const query = await searchParams;
-  const page = pages[slug];
+  const page = pageIndex.get(slug);
   const article = articles.find((a) => `wissen/${a.slug}` === slug);
-  const info = page || special[slug] || article;
+  const info = page || specialIndex.get(slug) || article;
+  const sections: Section[] = page?.sections || article?.sections || [];
   if (!info) notFound();
   const visualHero = !!page && !page.legal && slug !== "cookie-einstellungen";
   const customSections =
@@ -174,7 +184,7 @@ export default async function ContentPage({ params, searchParams }: Props) {
           <div className="editorial-layout">
             <aside>
               <span className="eyebrow">AUF DIESER SEITE</span>
-              {(page?.sections || article?.sections || []).map((s, i) => (
+              {sections.map((s, i) => (
                 <a href={`#abschnitt-${i}`} key={s.title}>
                   {s.title}
                 </a>
@@ -184,7 +194,7 @@ export default async function ContentPage({ params, searchParams }: Props) {
               </Link>
             </aside>
             <div className="article-body">
-              {(page?.sections || article?.sections || []).map((s, i) => (
+              {sections.map((s, i) => (
                 <section id={`abschnitt-${i}`} key={s.title}>
                   <h2>{s.title}</h2>
                   <p>{s.text}</p>

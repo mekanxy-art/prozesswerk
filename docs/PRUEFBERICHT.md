@@ -1,5 +1,7 @@
 # Prüfbericht
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 ## Aktualisierung: Design V2
 
 Die Gestaltung wurde am 17. Oktober 2026 mit eigenem 3D-Maskottchen, einer Prozessillustration, einer neuen Startseite und überarbeiteten Leistungs-, Lösungs- und Beispielseiten erweitert. Bildkonzept und vollständige Imagegen-Prompts stehen in `DESIGN-V2.md`.

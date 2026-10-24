@@ -14,7 +14,7 @@ export function MotionPage({ children }: { children: React.ReactNode }) {
     let observer: IntersectionObserver | undefined;
     const targets = Array.from(
       root.querySelectorAll<HTMLElement>(
-        ".section-heading, .studio-intro > div, .offering-group, .service-detail-grid > section, .process-service-intro, .process-usecase, .process-method li, .process-service-end, .studio-story-image, .studio-story-copy, .process-steps li, .industry-grid > section, .case-card, .article-body > section",
+        ".taste-intro > *, .taste-offer, .taste-work-heading, .taste-work-item, .taste-method > div, .taste-scope > div, .section-heading, .studio-intro > div, .offering-group, .service-detail-grid > section, .process-service-intro, .process-usecase, .process-method li, .process-service-end, .studio-story-image, .studio-story-copy, .process-steps li, .industry-grid > section, .case-card, .article-body > section",
       ),
     );
     const clear = () => {

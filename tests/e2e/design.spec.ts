@@ -63,3 +63,55 @@ test("service, solution and example layouts work at desktop and mobile sizes", a
   );
 });
 
+test("manual and connected workflows can be compared without losing the selected example", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Heute manuell", exact: true })
+    .click();
+  await expect(
+    page.getByText("Kontakt ins CRM abtippen", { exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Angebote & Dokumente", exact: true })
+    .click();
+  await expect(
+    page.getByText("Angaben manuell übertragen", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Verbunden", exact: true }).click();
+  await expect(
+    page.getByText("Mit Ihrer Dokumentvorlage", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Angebote & Dokumente", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+});
+
+test("design examples open as labeled concepts and fit a phone", async ({
+  page,
+  context,
+}) => {
+  await page.goto("/");
+  const concept = page.locator('a[href="/konzepte/shop.html"]');
+  const popup = context.waitForEvent("page");
+  await concept.click();
+  const demo = await popup;
+  await demo.waitForLoadState();
+  await expect(demo).toHaveTitle(/Gestaltungskonzept/);
+  await demo.setViewportSize({ width: 390, height: 900 });
+  await expect(demo.getByRole("heading", { level: 1 })).toHaveText(
+    "Alles dabei.",
+  );
+  expect(
+    await demo.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await expect(
+    demo.getByText("Beispielpreis · Kein Verkauf", { exact: true }),
+  ).toBeVisible();
+  await demo.getByRole("link", { name: "Produktdetails ansehen" }).click();
+  await expect(demo.locator("footer")).toContainText("kein Kundenprojekt");
+  await demo.close();
+});

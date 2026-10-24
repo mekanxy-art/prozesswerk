@@ -1,5 +1,7 @@
 # Umsetzung des Website-Master-Prompts
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 Stand: 19. Oktober 2026. Status: **mit Einschränkungen – lokale Vorschau, kein freigegebener Live-Betrieb**.
 
 ## 1. Auftrag, Zielgruppe und Annahmen
@@ -39,11 +41,11 @@ Bestehende URLs und die Anker leistungen, entdecken und moeglichkeiten bleiben e
 
 Die folgenden Seiten wurden am 19.10.2026 textlich abgerufen. UNHYDE war zuvor in dieser Unterhaltung auch im Browser visuell betrachtet worden. Für Apple und GOV.UK wird ausdrücklich keine vollständige visuelle oder interaktive Prüfung behauptet.
 
-| Referenz / Bereich | Beobachtetes Prinzip | Übertragung | Grenze |
-| --- | --- | --- | --- |
-| [UNHYDE – Start und Leistungen](https://www.unhyde.me/de) | Große Typografie, getrennte Angebote, auffällige Kontaktführung. | Vorhandene dunkle Markenwelt behalten, Angebot im Einstieg konkret benennen. | Stark inszenierte Projektübergänge bringen der Anfrage hier wenig; keine fremden Medien oder Referenzen übernommen. |
-| [Apple Deutschland – Angebotsdarstellung](https://www.apple.com/de/) | Pro Produkt eine kurze Botschaft und unterscheidbare nächste Schritte. | Klarer Hauptaufruf „Projekt anfragen“ und nachgeordnete Leistungsübersicht. | Produktkauf ist ein anderer Vorgang als ein Dienstleistungsgespräch; keine Apple-Texte oder Layouts kopiert. |
-| [GOV.UK – Kontakt nach Anliegen](https://www.gov.uk/contact) | Besucher ordnen sich über ihr Anliegen und verständliche Beschreibungen zu. | Aufgabenorientierte Begriffe, kurze Formularfelder, sichtbare Fehler am betroffenen Feld. | Behördeninhalte und umfangreiche Themenverzeichnisse wären für diese Website zu schwergewichtig. |
+| Referenz / Bereich                                                   | Beobachtetes Prinzip                                                        | Übertragung                                                                               | Grenze                                                                                                              |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [UNHYDE – Start und Leistungen](https://www.unhyde.me/de)            | Große Typografie, getrennte Angebote, auffällige Kontaktführung.            | Vorhandene dunkle Markenwelt behalten, Angebot im Einstieg konkret benennen.              | Stark inszenierte Projektübergänge bringen der Anfrage hier wenig; keine fremden Medien oder Referenzen übernommen. |
+| [Apple Deutschland – Angebotsdarstellung](https://www.apple.com/de/) | Pro Produkt eine kurze Botschaft und unterscheidbare nächste Schritte.      | Klarer Hauptaufruf „Projekt anfragen“ und nachgeordnete Leistungsübersicht.               | Produktkauf ist ein anderer Vorgang als ein Dienstleistungsgespräch; keine Apple-Texte oder Layouts kopiert.        |
+| [GOV.UK – Kontakt nach Anliegen](https://www.gov.uk/contact)         | Besucher ordnen sich über ihr Anliegen und verständliche Beschreibungen zu. | Aufgabenorientierte Begriffe, kurze Formularfelder, sichtbare Fehler am betroffenen Feld. | Behördeninhalte und umfangreiche Themenverzeichnisse wären für diese Website zu schwergewichtig.                    |
 
 Zwei Designrichtungen wurden abgewogen:
 
@@ -73,17 +75,17 @@ Die lokale Hauptvorschau enthält keinen FORM_SECRET und zeigt den Versand sicht
 
 ## 7. Dienste, Lizenzen, Datenflüsse und Kosten
 
-| Bestandteil | Tatsächlicher Stand |
-| --- | --- |
-| Next.js 15.5.28 / React 19.3.1 / Zod 4.6.7 | Vorhandene Abhängigkeiten, MIT laut installierter Paketmetadaten. |
-| Prisma Client 6.19.3 | Vorhanden, Apache-2.0 laut Paketmetadaten. Keine neue Datenbank provisioniert. |
-| Playwright 1.64.1 | Vorhandenes Prüfwerkzeug, Apache-2.0. |
-| axe-core / axe Playwright 4.14.0 | Vorhandene Prüfwerkzeuge, MPL-2.0. Automatische Prüfung ersetzt keine vollständige Barrierefreiheitsprüfung. |
-| Maskottchen und Prozessgrafik | Bereits bereitgestellte Assets. Herkunftshinweise im früheren Designbericht; tatsächliche Nutzungsrechte sind vom Betreiber zu bestätigen. Keine neue Lizenzgarantie. |
-| Domain, Hosting, Geschäfts-E-Mail | Nicht gewählt bzw. nicht konfiguriert; Eigentümer, Tarif, Region und Kosten noch offen. |
-| PostgreSQL / Versand / optional n8n | Integration im vorhandenen Code; produktive Zugänge, Empfänger, Datenstandort, Verträge und laufende Kosten fehlen. |
-| Shopify | Nur als angebotene Dienstleistung beschrieben. Kein Shopify-Konto angelegt, kein Tarif gebucht, kein Kunden-Shop verändert. |
-| Tracking, Drittanbieterfonts, Videos, Karten | Nicht neu eingebaut. Kein Cookiebanner aus Gewohnheit ergänzt. |
+| Bestandteil                                  | Tatsächlicher Stand                                                                                                                                                   |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Next.js 15.5.28 / React 19.3.1 / Zod 4.6.7   | Vorhandene Abhängigkeiten, MIT laut installierter Paketmetadaten.                                                                                                     |
+| Prisma Client 6.19.3                         | Vorhanden, Apache-2.0 laut Paketmetadaten. Keine neue Datenbank provisioniert.                                                                                        |
+| Playwright 1.64.1                            | Vorhandenes Prüfwerkzeug, Apache-2.0.                                                                                                                                 |
+| axe-core / axe Playwright 4.14.0             | Vorhandene Prüfwerkzeuge, MPL-2.0. Automatische Prüfung ersetzt keine vollständige Barrierefreiheitsprüfung.                                                          |
+| Maskottchen und Prozessgrafik                | Bereits bereitgestellte Assets. Herkunftshinweise im früheren Designbericht; tatsächliche Nutzungsrechte sind vom Betreiber zu bestätigen. Keine neue Lizenzgarantie. |
+| Domain, Hosting, Geschäfts-E-Mail            | Nicht gewählt bzw. nicht konfiguriert; Eigentümer, Tarif, Region und Kosten noch offen.                                                                               |
+| PostgreSQL / Versand / optional n8n          | Integration im vorhandenen Code; produktive Zugänge, Empfänger, Datenstandort, Verträge und laufende Kosten fehlen.                                                   |
+| Shopify                                      | Nur als angebotene Dienstleistung beschrieben. Kein Shopify-Konto angelegt, kein Tarif gebucht, kein Kunden-Shop verändert.                                           |
+| Tracking, Drittanbieterfonts, Videos, Karten | Nicht neu eingebaut. Kein Cookiebanner aus Gewohnheit ergänzt.                                                                                                        |
 
 Die Umsetzung hat keine neuen kostenpflichtigen Dienste aktiviert. Eine seriöse Gesamtsumme pro Monat lässt sich ohne gewählte Anbieter und Tarife nicht nennen. Vor Livegang sind aktuelle Preisangebote, Limits, kommerzielle Nutzungsbedingungen und Exportmöglichkeiten festzuhalten. Domain und zentrale Konten sollen dem Betreiber gehören; Zugriffe erfolgen über passende Rollen statt geteilte Passwörter.
 
@@ -137,6 +139,5 @@ Rückfall: lokalen Server beenden, den gesicherten vorherigen Quellcode in ein g
 **Noch offen:** echte Nutzerstudie, echte Geräte, Safari/WebKit, Screenreader, abschließende Rechte- und Rechtsprüfung, Kundenpflege durch einen tatsächlichen Verantwortlichen.
 
 **Extern blockiert:** Live-Domain/Hosting, reale Betreiberangaben und Zugangseinladungen, produktiver Datenbank- und Mailbetrieb, echte Zustellbestätigung und laufende Kosten. Daher lokale Abnahme mit Einschränkungen, keine Veröffentlichung als vollständig produktionsreif.
-
 
 Aktuelles Prüfergebnis: 17/17 Browsertests und 10/10 Sicherheitstests bestanden. Mobiler lokaler Lighthouse-Labortest: Performance 99, Accessibility 100, Best Practices 100, SEO 69 (private Vorschau absichtlich nicht crawlbar), LCP 2,2 s, CLS 0, TBT 10 ms. Details und Grenzen: TESTPROTOKOLL-MASTER.md.

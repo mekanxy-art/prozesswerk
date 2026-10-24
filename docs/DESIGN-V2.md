@@ -1,5 +1,7 @@
 # Designüberarbeitung V2
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 Eigene Art Direction mit warmem Off-White, dunklem Tannengrün, sanftem Limettengrün und Korallorange. Die Bogenfigur steht als visuelle Metapher für das Verbinden von Systemen. Sie ist kein echter KI-Assistent und hat keine Chatfunktion. Keine fremde Figur oder Kundenreferenz.
 
 Umgesetzt: neue Startseite, klickbare Anwendungsbeispiele, differenzierte Leistungsdarstellung, anschauliche Beispielseiten, überarbeitete Lösungen, gemeinsame Bildsprache und stärkerer Kontaktabschluss. Die Formulare und Backendlogik bleiben erhalten. Bewegungen werden bei `prefers-reduced-motion` deaktiviert.

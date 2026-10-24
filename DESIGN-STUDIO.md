@@ -1,5 +1,7 @@
 # Prozesswerk – Studio-Redesign
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](docs/RELEASE-2026-10-24.md).
+
 Die bestehende Next.js-Website wurde gestalterisch an der Referenz https://www.unhyde.me/de ausgerichtet. Das vorhandene orangefarbene Maskottchen, die Prozessillustration, die Unterseiten und die Backend-Implementierung sind erhalten.
 
 ## Gestaltung und Navigation

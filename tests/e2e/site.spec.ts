@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { randomBytes, randomUUID } from "node:crypto";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { db } from "../../src/lib/db";
@@ -6,6 +7,7 @@ import { hashPassword, digest } from "../../src/lib/security";
 import { preferenceToken } from "../../src/lib/delivery";
 import { pages, articles } from "../../src/lib/content";
 import { rateKey } from "../../src/lib/rate-limit";
+const doiKey = "e2e-doi-" + randomUUID();
 const testsAllowed = process.env.ALLOW_DATABASE_TESTS === "true";
 const email = "e2e-admin@example.invalid";
 const password = "e2e-password-only-for-tests-2026";
@@ -34,7 +36,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   if (!testsAllowed) return;
-  await db.lead.deleteMany({ where: { requestKey: "e2e-doi-only" } });
+  await db.lead.deleteMany({ where: { requestKey: doiKey } });
   await db.lead.deleteMany({
     where: {
       email: { in: ["e2e@example.invalid", "e2e-nojs@example.invalid"] },
@@ -62,10 +64,10 @@ test("invalid form proof fails visibly without saving data", async ({
 test("marketing requires explicit confirmation and supports withdrawal", async ({
   page,
 }) => {
-  const token = "a".repeat(64);
+  const token = randomBytes(32).toString("hex");
   const lead = await db.lead.create({
     data: {
-      requestKey: "e2e-doi-only",
+      requestKey: doiKey,
       name: "BEISPIEL DOI",
       company: "BEISPIEL Test",
       email: "doi@example.invalid",
@@ -199,7 +201,7 @@ async function fillLead(page: import("@playwright/test").Page, email: string) {
     .getByLabel("Worum geht es bei Ihrem Vorhaben?")
     .selectOption("Onboarding");
   await page
-    .getByLabel("Ihr Vorhaben *", { exact: true })
+    .locator("#lead-challenge")
     .fill(
       "Wir möchten unsere Übergaben beim Projektstart verlässlich organisieren.",
     );
@@ -250,7 +252,7 @@ test("central content and lead submission work without JavaScript", async ({
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto((process.env.TEST_BASE_URL || "http://localhost:3000") + "/");
-  await expect(page.locator("h1")).toContainText("Websites.");
+  await expect(page.locator("h1")).toContainText("Digital.");
   await page.goto(
     (process.env.TEST_BASE_URL || "http://localhost:3000") + "/kontakt",
   );

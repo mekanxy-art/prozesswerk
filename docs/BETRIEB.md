@@ -19,19 +19,7 @@ Admin: `ADMIN_EMAIL` und ein mindestens 16 Zeichen langes `ADMIN_PASSWORD` als t
 
 ## Prüfungen
 
-```sh
-npm run typecheck
-npm run lint
-npm run format:check
-npm test
-npm run test:integration
-npm run build
-npm start
-npm run test:e2e
-npm audit
-```
-
-Für Integration und E2E `ALLOW_DATABASE_TESTS=true` ausdrücklich in der dedizierten Testumgebung setzen. Integration und E2E nur gegen eine dedizierte leere Testdatenbank mit derselben `DATABASE_URL` wie der gestartete Testserver ausführen. E2E legt ausdrücklich gekennzeichnete Testleads und einen temporären Testadmin an und räumt diese anschließend auf. Keine Produktionsdaten verwenden. Lokal wird Microsoft Edge verwendet; unter CI Chromium über `npx playwright install --with-deps chromium` bereitstellen. Die Browserprüfung erwartet Port 3000. TypeScript-Tests werden vor Ausführung kompiliert, damit sie auch in Windows-Sandboxes ohne nutzbares `os.userInfo` laufen.
+Aktuelle Befehle, Voraussetzungen und Ports: [TESTING.md](TESTING.md). Für die reine Vorschau genügen `npm run typecheck`, `npm run lint`, `npm test` und nach einem Produktionsbuild `npm run test:public`. Datenbankprüfungen benötigen eine ausdrücklich freigegebene separate Testumgebung; die neuen Sicherheitstests verwenden Port 3114. `npm run test:outage` startet selbst eine Fehlerinstanz auf Port 3101. Keine Tests gegen Produktivdaten.
 
 ## Docker
 

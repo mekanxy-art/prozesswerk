@@ -1,106 +1,113 @@
 # Prozesswerk
 
-**Responsive Unternehmenswebsite mit serverseitigem Anfrageformular und vorbereitetem Lead-Management.**
+**Responsive Unternehmenswebsite mit Anfrageverarbeitung und geschützter Lead-Verwaltung.**
 
-Ein KI-unterstütztes Portfolio- und Praxisprojekt mit Next.js, React und TypeScript. Es verbindet eine eigenständige visuelle Gestaltung mit nachvollziehbarer Formularverarbeitung, Tastaturbedienung und automatisierten Tests.
+Ein KI-unterstütztes Portfolio- und Praxisprojekt mit Next.js, React und TypeScript. Es verbindet eine eigenständige Gestaltung mit serverseitiger Formularverarbeitung, Datenbank, Tastaturbedienung und automatisierten Tests.
 
-![Prozesswerk: Startseite mit Leistungsversprechen und orangefarbenem Maskottchen](docs/screenshots/home-desktop.png)
+![Aktuelle Prozesswerk-Startseite: Digital. Gut verbunden. mit orangefarbenem Maskottchen](docs/screenshots/home-desktop.png)
 
-[Funktionen](#funktionen) · [Lokal starten](#lokal-starten) · [Architektur](docs/ARCHITECTURE.md) · [Tests](#qualität-und-tests) · [Projektstatus](#projektstatus)
+[Lokal starten](#lokal-starten) · [Prüfstand](#qualität-und-tests) · [Architektur](docs/ARCHITECTURE.md) · [Dokumentation](docs/README.md)
 
-## Ziel des Projekts
+## Ziel und Funktionen
 
-Eine übersichtliche Website für ein konzeptionelles Dienstleistungsangebot entwickeln: Websites und Shopify-Shops sowie Prozessoptimierung und Automatisierung. Besucher sollen Leistungen verstehen, Beispiele erkunden und eine Projektanfrage stellen können.
+Die Website erklärt ein konzeptionelles Dienstleistungsangebot für kleine und mittelständische Unternehmen: Websites und Shopify-Shops sowie Prozessoptimierung und Automatisierung.
 
-Die Website präsentiert diese Leistungen. Sie ist selbst **kein Shopify-Shop, keine Shopify-App und kein Werkzeug zur Shop-Migration**. Die gezeigten Anwendungsfälle sind Konzepte, keine behaupteten Kundenreferenzen.
+- Responsive Start-, Leistungs-, Beispiel-, Wissens- und Kontaktseiten mit zwei gegliederten Leistungsbereichen.
+- Eigene Gestaltungskonzepte „Werkraum“ und „Alltag“ zum Öffnen im Browser; fiktive Marken, keine Kundenreferenzen.
+- Prozessvergleich: drei Beispiele und jeweils „Heute manuell / Verbunden“.
+- Tastaturbedienbares Menü, Fokusführung, Navigation ohne JavaScript und reduzierte Bewegung.
+- Anfrageformular mit drei Pflichtfeldern, serverseitiger Validierung und erhaltenen Eingaben bei Fehlern, auch ohne JavaScript.
+- PostgreSQL, geschützter Admin-Bereich, Statuspflege, Aktivitätsverlauf und abgesicherter CSV-Export.
+- Transaktionale Outbox und Worker; optionale E-Mails und signierte Webhooks sind standardmäßig deaktiviert.
+- Metadaten, strukturierte Daten und Open-Graph-Bild; Vorschau absichtlich nicht indexierbar.
+- Statischer Portfolio-Export ohne Backend, mit deaktiviertem Formular.
 
-## Funktionen
-
-- Responsive Start-, Leistungs-, Beispiel-, Wissens- und Kontaktseiten.
-- Einheitliche Darstellung der zwei Leistungsbereiche und ihrer Detailseiten.
-- Interaktiver Prozess-Explorer und zurückhaltende Animationen mit Unterstützung für reduzierte Bewegung.
-- Tastaturbedienbares Menü mit Fokussteuerung, Escape-Taste und gesperrtem Hintergrund.
-- Anfrageformular mit drei Pflichtfeldern, serverseitiger Validierung und erhaltenen Eingaben bei Fehlern – auch ohne JavaScript.
-- Individuelle Seitentitel, Metadaten, strukturierte Daten, Sitemap und Open-Graph-Bild; die Vorschau bleibt absichtlich auf `noindex`.
-- Implementierte Backend-Bausteine für Leads, Admin-Zugang, CSV-Export und eine transaktionale Outbox. E-Mail und signierte Webhooks sind standardmäßig deaktiviert.
+Das Repository ist selbst kein Shopify-Shop und keine Shopify-Migrationssoftware. Die Dienstleistungen sind Website-Inhalt. Es gibt keine echte Bestellabwicklung oder behauptete Kundenprojekte.
 
 <details>
-<summary>Weitere Screenshots</summary>
+<summary>Weitere aktuelle Screenshots</summary>
 
 ### Leistungen
 
-![Zwei einheitlich aufgebaute Leistungsbereiche](docs/screenshots/services.png)
+![Websites und Shops sowie Prozesse und Automatisierung](docs/screenshots/services.png)
 
-### Mobile Kontaktseite
+### Prozessvergleich
 
-<img src="docs/screenshots/contact-mobile.png" alt="Kontaktformular in der mobilen Ansicht" width="360">
+![Prozessvergleich am Beispiel einer Anfrage und CRM-Übergabe](docs/screenshots/process-comparison.png)
+
+### Kontakt auf dem Smartphone
+
+<img src="docs/screenshots/contact-mobile.png" alt="Mobiles Kontaktformular im deaktivierten Vorschaumodus" width="320">
 
 </details>
 
 ## Technischer Aufbau
 
-| Bereich              | Umsetzung                                                    |
-| -------------------- | ------------------------------------------------------------ |
-| Anwendung            | Next.js 15 App Router, React 19, TypeScript im Strict-Modus  |
-| Gestaltung           | Eigenes CSS, responsive Layouts, Next Image                  |
-| Eingaben             | Server Actions und Zod                                       |
-| Datenhaltung         | PostgreSQL und Prisma 6                                      |
-| Zugriff              | Admin-Sitzungen, scrypt-Passwortprüfung                      |
-| Verarbeitung         | Transaktionale Outbox, separater Worker, Wiederholungslogik  |
-| Optionale Zustellung | Resend sowie HMAC-signierte Webhooks für einen n8n-Empfänger |
-| Qualität             | TypeScript, ESLint, Node-Test-Runner, Playwright, axe-core   |
+| Bereich      | Umsetzung                                                  |
+| ------------ | ---------------------------------------------------------- |
+| Anwendung    | Next.js 15 App Router, React 19, TypeScript Strict         |
+| Gestaltung   | Eigenes CSS, lokale Bilder, Systemschriften, Next Image    |
+| Eingaben     | Server Actions und Zod                                     |
+| Datenhaltung | PostgreSQL und Prisma 6                                    |
+| Zugriff      | scrypt, gehashte Sitzungen, geschützte Cookies             |
+| Zustellung   | Outbox, Wiederholungen, optional Resend und HMAC-Webhooks  |
+| Qualität     | ESLint, TypeScript, Node-Test-Runner, Playwright, axe-core |
 
-[Hinweise zur statischen Portfolio-Demo](docs/DEMO.md). Ein öffentlicher Demo-Link wird erst nach erfolgreicher Veröffentlichung ergänzt.
-
-Die genauen Abhängigkeiten sind im [Lockfile](package-lock.json) festgehalten.
+Versionen stehen im [Lockfile](package-lock.json). Eine öffentliche Live-Demo ist noch nicht veröffentlicht. Screenshots und lokale Vorschau zeigen den aktuellen Stand.
 
 ## Lokal starten
 
-Voraussetzungen: Node.js 22 oder 24 und npm. PostgreSQL wird für die reine Seitenvorschau nicht benötigt.
+Voraussetzungen: Node.js 22 oder 24 und npm. Für die reine Seitenvorschau wird keine Datenbank benötigt.
 
-1. Repository herunterladen oder klonen und im Projektordner öffnen.
-2. Abhängigkeiten installieren:
+```sh
+git clone https://github.com/mekanxy-art/prozesswerk.git
+cd prozesswerk
+npm ci
+```
 
-   ```sh
-   npm ci
-   ```
+Alternativ GitHub → **Code → Download ZIP**, entpacken und den Projektordner im Terminal öffnen.
 
-3. `.env.example` nach `.env` kopieren. Die Beispielkonfiguration für die Seitenvorschau belassen: `FORM_SECRET` und `RATE_LIMIT_SECRET` leer, `DELIVERY_ENABLED=false`, `SITE_INDEXABLE=false`.
-4. Entwicklungsserver starten:
+`.env.example` nach `.env` kopieren:
 
-   ```sh
-   npm run dev
-   ```
+```powershell
+Copy-Item .env.example .env
+```
 
-5. [Lokale Vorschau öffnen](http://localhost:3000).
+Unter macOS/Linux: `cp .env.example .env`.
 
-Ohne Formularkonfiguration bleibt das Formular sichtbar deaktiviert. Das ist der erwartete Vorschaumodus. `localhost` und `127.0.0.1` sind unterschiedliche Origins: Browseradresse, `APP_ORIGIN` und `SITE_URL` müssen zusammenpassen.
+Für die Vorschau `FORM_SECRET` und `RATE_LIMIT_SECRET` leer lassen, `DELIVERY_ENABLED=false` und `SITE_INDEXABLE=false` beibehalten.
+
+```sh
+npm run dev
+```
+
+[http://localhost:3000](http://localhost:3000) öffnen. Ohne Konfiguration bleibt das Anfrageformular sichtbar deaktiviert. Das ist der erwartete Vorschaumodus. Der Server ist zunächst bewusst nur lokal erreichbar.
 
 ### Anfrageverarbeitung aktivieren
 
-Eine eigene lokale PostgreSQL-Datenbank anlegen und `DATABASE_URL` in `.env` eintragen. Zwei unabhängige Secrets erzeugen und als `FORM_SECRET` bzw. `RATE_LIMIT_SECRET` hinterlegen. Diesen Befehl zweimal ausführen:
+Eine eigene lokale PostgreSQL-Datenbank anlegen, `DATABASE_URL` setzen und zwei unabhängige Secrets erzeugen. Diesen Befehl zweimal ausführen und die Ergebnisse als `FORM_SECRET` und `RATE_LIMIT_SECRET` ausschließlich lokal hinterlegen:
 
 ```sh
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-Anschließend Migrationen ausschließlich auf der dafür angelegten Datenbank anwenden und den Server neu starten:
+Browseradresse, `APP_ORIGIN` und `SITE_URL` müssen exakt zusammenpassen. `localhost` und `127.0.0.1` sind unterschiedliche Ursprünge. Im Produktionsmodus werden schreibende Anfragen ohne gültige konfigurierte Herkunft abgewiesen.
 
 ```sh
 npm run db:deploy
 npm run dev
 ```
 
-`DELIVERY_ENABLED=false` verhindert externe Zustellung, **nicht die Speicherung** von Anfragen. Für Tests ausschließlich synthetische Daten verwenden. Admin-Anlage, Worker und optionale Zustellung beschreibt die [Betriebsanleitung](docs/BETRIEB.md).
+`DELIVERY_ENABLED=false` verhindert externe Zustellung, nicht die Speicherung. Für Tests ausschließlich künstliche Daten verwenden. [Admin-Anlage und Betrieb](docs/BETRIEB.md) · [Getrennte Datenbanktests](docs/DATABASE-SECURITY-TESTS.md).
 
-### Produktionsbuild lokal prüfen
+### Produktionsfassung ansehen
 
 ```sh
 npm run build
 npm start
 ```
 
-Docker-Dateien liegen bei; der Docker-Betrieb wurde im aktuellen Prüfstand nicht ausgeführt. Dies ist keine Freigabe für einen öffentlichen Produktivbetrieb.
+Docker-Dateien liegen bei; ein Docker-Lauf ist bislang nicht bestätigt. Eine lokale Vorschau ist keine Freigabe für öffentlichen Produktivbetrieb.
 
 ## Qualität und Tests
 
@@ -108,64 +115,62 @@ Docker-Dateien liegen bei; der Docker-Betrieb wurde im aktuellen Prüfstand nich
 npm run typecheck
 npm run lint
 npm test
+npm run security:audit
 ```
 
-Für die öffentlichen Browsertests einen Produktionsbuild ohne `FORM_SECRET` auf Port 3000 starten. Chromium installieren und in der Shell `TEST_BROWSER_CHANNEL=chromium` setzen; bei abweichender Adresse zusätzlich `TEST_BASE_URL` setzen.
+Für öffentliche Browsertests einen Produktionsserver ohne Formularsecrets starten. In einem zweiten Terminal den Browserkanal setzen, bei abweichendem Port außerdem `TEST_BASE_URL`:
 
-```sh
+```powershell
+$env:TEST_BROWSER_CHANNEL = 'chromium'
+$env:TEST_BASE_URL = 'http://localhost:3000'
 npx playwright install chromium
-npm run test:e2e -- tests/e2e/design.spec.ts tests/e2e/offering.spec.ts tests/e2e/studio.spec.ts tests/e2e/motion.spec.ts tests/e2e/master.spec.ts
+npm run test:public
 ```
 
-Die [GitHub-Actions-Konfiguration](.github/workflows/ci.yml) führt diese öffentlichen Tests sowie Typprüfung, Lint, Unit-Tests und Build aus. Ein tatsächlicher GitHub-Lauf kann erst nach dem Upload bestätigt werden.
+Unter POSIX-Shells entsprechend `export TEST_BROWSER_CHANNEL=chromium` setzen. Die [Testanleitung](docs/TESTING.md) trennt öffentliche Seiten, Datenbanktests und die absichtlich fehlerhafte Formularinstanz. `npm run test:e2e` ohne Auswahl setzt alle diese Umgebungen voraus.
 
-**Dokumentierter lokaler Prüfstand vom 19.10.2026:** 17 Browsertests und 10 Unit-/Sicherheitstests bestanden. Vier der 17 Browsertests prüfen Formularfehler auf einer separaten Fehlerinstanz auf Port 3101 und gehören deshalb nicht zum öffentlichen CI-Lauf. Details und Grenzen stehen im [Testprotokoll](docs/TESTPROTOKOLL-MASTER.md).
+**Prüfstand vom 24.10.2026:** 21 öffentliche Browserprüfungen, 14 Datenbank-Browserprüfungen (davon acht zusätzliche Sicherheitsprüfungen), elf Unit-Tests und neun Backend-Integrationstests einschließlich übergeordnetem Test bestanden. Der gesonderte Datenbankausfall-Test besteht ebenfalls. Details: [Sicherheitsbericht](docs/SECURITY-REVIEW-2026-10-24.md).
 
-Eine einzelne mobile Lighthouse-Labormessung ergab Performance 99, Accessibility 100, Best Practices 100 und SEO 69. Der SEO-Wert ist durch die absichtlich nicht indexierbare Vorschau begrenzt. Diese Messung ist keine Garantie für Hosting, reale Geräte oder vollständige Barrierefreiheit.
+Paketprüfung ohne gemeldete Lücken zum Prüfzeitpunkt. Zusätzliche statische Sicherheitsregeln und ein passiver OWASP-ZAP-Lauf wurden durchgeführt; Grenzen und verbleibende Hinweise sind dokumentiert. Dies ist kein unabhängiger Penetrationstest.
 
-Datenbank-Integrationstests und `site.spec.ts` benötigen eine dedizierte Testdatenbank und `ALLOW_DATABASE_TESTS=true`. Sie verändern Testdaten. Ein pauschales `npm run test:e2e` setzt außerdem die separate Formular-Fehlerinstanz voraus. Siehe [Testanleitung](docs/TESTING.md).
+Die [GitHub-Prüfkonfiguration](.github/workflows/ci.yml) prüft öffentliche Seiten und eine getrennte Datenbankumgebung. Maßgeblich ist jeweils der tatsächliche [Actions-Lauf](https://github.com/mekanxy-art/prozesswerk/actions) des betreffenden Commits.
 
 ## Bewusste Entscheidungen
 
-- **Serverseitige Validierung:** Die Prüfung hängt nicht allein vom Browser ab. Fehlermeldungen verweisen auf die betroffenen Felder und erhalten die Eingaben.
-- **Transaktionale Outbox:** Speichern und Zustellen sind getrennt. Ein bestätigter Datenbankeintrag ist noch keine bestätigte E-Mail-Zustellung.
-- **Zugängliche Bewegung:** Inhalte sind sofort lesbar; Animationen verzögern keine Navigation. Bewegte Laufschrift lässt sich pausieren.
-- **Sicherer Vorschaumodus:** Ohne Konfiguration kein scheinbar funktionierender Versand, keine externen Zustellungen und keine Suchmaschinenindexierung.
+- Serverseitige Prüfung und nachvollziehbare Fehler statt einer ausschließlich browserseitigen Validierung.
+- Speicherung und Zustellung getrennt: Ein Datenbankeintrag ist keine Zustellbestätigung.
+- Inhalte bleiben ohne Animation lesbar; Tastaturbedienung und reduzierte Bewegung werden berücksichtigt.
+- Vorschau ohne eingerichtetes Formular verhindert scheinbar erfolgreiche Anfragen.
+- Fiktive Konzepte werden ausdrücklich gekennzeichnet; keine erfundenen Kundenlogos oder Erfolgszahlen.
 
 ## Projektstatus
 
-| Bereich                                | Stand                                                                          |
-| -------------------------------------- | ------------------------------------------------------------------------------ |
-| Öffentliche Seiten und Navigation      | Lokal umgesetzt und automatisiert geprüft                                      |
-| Formularvalidierung und Fehlerzustände | Lokal geprüft, einschließlich erhaltener Eingaben                              |
-| Datenbank, Admin und Outbox            | Implementiert; aktuelle End-to-End-Prüfung mit echter Testdatenbank ausstehend |
-| Externe E-Mail-/Webhook-Zustellung     | Vorbereitet, deaktiviert; tatsächlicher Empfang nicht bestätigt                |
-| Öffentliche Live-Demo                  | Noch nicht veröffentlicht                                                      |
-| Unternehmens- und Rechtstexte          | Entwürfe mit Platzhaltern                                                      |
+| Bereich                                          | Stand                                                                                     |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Öffentliche Seiten, Navigation und Gestaltung    | Lokal umgesetzt und automatisiert geprüft                                                 |
+| Datenbank, Admin, Anfrage und Einwilligungslinks | Gegen getrennte PostgreSQL-Testdatenbank geprüft                                          |
+| E-Mail und Webhook                               | Dienstverträge mit simulierten Antworten geprüft; tatsächliche Zustellung nicht bestätigt |
+| Statischer Demo-Export                           | Lokal erzeugt und geprüft, kein Backend enthalten                                         |
+| Öffentliche Live-Demo                            | Noch nicht veröffentlicht                                                                 |
+| Docker und Hostingbetrieb                        | Konfiguration vorhanden, Lauf noch nicht bestätigt                                        |
+| Unternehmens- und Rechtstexte                    | Entwürfe mit offenen Betreiberangaben                                                     |
 
-Nächste Schritte: Datenbank-Integration erneut prüfen, Zustellung in einer isolierten Umgebung testen, manuelle Screenreader- und weitere Browserprüfungen durchführen und vor einem Livegang Betreiberangaben sowie Nutzungsrechte klären.
+Vor einem Livegang bleiben tatsächliche Zustellung, Hosting, Betreiberangaben und Rechteklärung erforderlich. Automatische Barrierefreiheitsprüfungen ersetzen keine vollständige Screenreader- und Browserprüfung.
 
 ## Arbeitsweise und KI-Unterstützung
 
-Das Projekt wurde mit umfangreicher Unterstützung von OpenAI Codex entwickelt. Konzept, Leistungsangebot, gestalterische Richtung und Überarbeitungen wurden im Dialog festgelegt. KI unterstützte wesentlich bei Quellcode, Texten, Dokumentation und Testautomatisierung; die Illustrationen wurden mit einem KI-Bildwerkzeug erzeugt.
+Das Projekt wurde mit umfangreicher Unterstützung von OpenAI Codex entwickelt. Konzept, Angebot, gestalterische Richtung und Überarbeitungen wurden im Dialog festgelegt. KI unterstützte wesentlich bei Code, Texten, Dokumentation und Tests; die bestehenden Maskottchen- und Prozessillustrationen wurden mit einem KI-Bildwerkzeug erzeugt.
 
-Dieses Repository dokumentiert das entstandene Projekt und seine überprüften Eigenschaften. Es behauptet keine vollständig ohne Hilfsmittel erbrachte Eigenentwicklung. Die Weiterentwicklung dient auch dazu, Architektur, Code und Entscheidungen selbst nachzuvollziehen und erklären zu können.
+Dies ist keine behauptete vollständig ohne Hilfsmittel erbrachte Eigenentwicklung. Das Projekt dient auch dazu, Architektur und Entscheidungen nachvollziehen und erklären zu können.
+
+Gestalterische Methoden und Referenzen: [Taste Skill, Open Design, Superpowers und zehn Anbieter](docs/TASTE-RECHERCHE.md). Es wurde keine zusätzliche KI-Plattform in die Website eingebunden.
 
 ## Dokumentation und Rechte
 
-- [Architektur und Datenfluss](docs/ARCHITECTURE.md)
-- [Tests ausführen und Prüfgrenzen verstehen](docs/TESTING.md)
-- [Installation und Betrieb](docs/BETRIEB.md)
-- [Aktueller ausführlicher Prüfbericht](docs/TESTPROTOKOLL-MASTER.md)
-- [Beitragen](CONTRIBUTING.md) und [Sicherheitshinweise](SECURITY.md)
-- [Herkunft und Nutzungsrechte](RIGHTS.md)
+- [Dokumentationsübersicht: aktuelle Anleitungen und ältere Entwürfe](docs/README.md)
+- [Architektur](docs/ARCHITECTURE.md) · [Betrieb](docs/BETRIEB.md) · [Tests](docs/TESTING.md)
+- [Aktueller Veröffentlichungsstand](docs/RELEASE-2026-10-24.md)
+- [Sicherheitsprüfung und Grenzen](docs/SECURITY-REVIEW-2026-10-24.md)
+- [Beitragen](CONTRIBUTING.md) · [Sicherheitsmeldungen](SECURITY.md) · [Herkunft und Rechte](RIGHTS.md)
 
-Es wurde noch keine eigene Open-Source-Lizenz vergeben. Abhängigkeiten behalten ihre jeweiligen Lizenzen. Die Sichtbarkeit eines Repositorys ersetzt keine Nutzungslizenz.
-
-## Repository-Prüfung vom 23.10.2026
-
-Der vollständige Projektstand wurde mit frisch installierten npm-Abhängigkeiten geprüft. Die automatische Prisma-Client-Erzeugung ist über `postinstall` hinterlegt. Typprüfung, Lint, 10 Unit-/Sicherheitstests, Produktionsbuild und 13 öffentliche Browsertests bestanden lokal. Die vier isolierten Formular-Fehlertests und Datenbank-Integrationstests wurden bei diesem Lauf nicht wiederholt. GitHub-Actions-Ergebnisse gelten jeweils für den dort geprüften Commit.
-
-## Gestaltung mit Open Design
-
-Die Gestaltung wurde anhand der Redesign- und Bewegungsleitfäden von Open Design überarbeitet. Quellen und Umsetzung: [Open-Design-Dokumentation](docs/OPEN-DESIGN.md). Farben, Typografie und Bedienregeln: [DESIGN.md](DESIGN.md).
+Es wurde keine eigene Open-Source-Lizenz vergeben. Abhängigkeiten behalten ihre jeweiligen Lizenzen. Öffentlich sichtbar bedeutet nicht automatisch frei nachnutzbar.

@@ -1,160 +1,251 @@
-import { MotionMarquee } from "@/components/motion-page";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Arrow, CTA, FAQ, JsonLd } from "@/components/ui";
-import { Mascot, MiniFlow, WebsiteArt } from "@/components/visuals";
+import { Mascot } from "@/components/visuals";
 import { ProcessExplorer } from "@/components/process-explorer";
-import { serviceGroups } from "@/lib/offering";
 import { faq } from "@/lib/content";
 import { company, siteUrl } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Websites, Shopify-Shops & Automatisierung",
   description:
-    "Websites und Shopify-Shops erstellen, Shop-Migrationen begleiten und Prozesse vereinfachen. Für Unternehmen im Mittelstand.",
+    "Websites und Shopify-Shops erstellen, Shop-Migrationen begleiten und wiederkehrende Abläufe vereinfachen. Für kleine und mittelständische Unternehmen.",
   alternates: { canonical: "/" },
 };
 export default function Home() {
   return (
-    <div className="studio-home">
-      <section className="studio-hero master-hero">
-        <div className="hero-meta">
-          <span>
-            <i className="status-dot" /> WEBSITES, SHOPS & PROZESSE
-          </span>
-          <span>VON DER WEBSITE BIS ZUM WORKFLOW.</span>
-        </div>
-        <h1>
-          <span>Websites.</span>
-          <span>Online-Shops.</span>
-          <span className="outline-title">Weniger Routine.</span>
-        </h1>
-        <div className="hero-bottom">
-          <p>
-            Wir gestalten Ihren Webauftritt, erstellen Shopify-Shops und
-            vereinfachen wiederkehrende Abläufe. Für kleine und mittelständische
-            Unternehmen.
-          </p>
-          <div className="hero-actions">
-            <Link className="button hero-primary" href="/kontakt">
-              Projekt anfragen <Arrow />
-            </Link>
-            <Link className="text-link" href="/leistungen">
-              Leistungen ansehen <Arrow />
-            </Link>
-          </div>
-          <p className="hero-first-step">
-            Kostenloses Erstgespräch · Umsetzung nach vereinbartem Umfang
-          </p>
-        </div>
-        <div className="hero-character">
-          <div className="hero-stage-heading">
-            <span>PROZESSWERK / GUT VERBUNDEN</span>
-            <span aria-hidden="true">↗</span>
-          </div>
-          <div className="hero-orbit" aria-hidden="true" />
+    <div className="studio-home taste-home">
+      <section className="taste-hero">
+        <div className="taste-hero-visual">
           <Mascot className="hero-mascot" priority />
-          <span className="character-note">Hallo, ich verbinde.</span>
-          <div
-            className="hero-stage-flow"
-            aria-label="Beispiel: Von der Website über die Anfrage zum Ablauf"
-          >
-            <span>Website</span>
-            <b aria-hidden="true">→</b>
-            <span>Anfrage</span>
-            <b aria-hidden="true">→</b>
-            <span>
-              Ablauf <b aria-hidden="true">✓</b>
-            </span>
-          </div>
-          <span className="character-caption">
-            EIN AUFTRITT. EIN DURCHDACHTER ABLAUF.
-          </span>
+          <p>
+            Ihr Auftritt. Ihr Alltag.
+            <br />
+            Gut verbunden.
+          </p>
         </div>
-        <div className="hero-index">
-          <span>01 / MEHR ZEIT FÜR GUTE ARBEIT</span>
-          <span>KONZEPT → VERBINDUNG → FREIRAUM</span>
+        <div className="taste-hero-copy">
+          <h1>
+            Digital.
+            <br />
+            Gut verbunden.
+          </h1>
+          <p>
+            Websites, Shopify-Shops und Automatisierungen, die zu Ihrem
+            Unternehmen passen.
+          </p>
+          <Link className="button hero-primary" href="/kontakt">
+            Vorhaben besprechen <Arrow />
+          </Link>
+          <span className="taste-hero-note">
+            Kostenloses Erstgespräch. Ein klarer nächster Schritt.
+          </span>
         </div>
       </section>
-      <MotionMarquee />
-      <section className="studio-services section" id="leistungen">
-        <span id="entdecken" className="anchor-marker" aria-hidden="true" />
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">01 / UNSERE LEISTUNGEN</span>
-            <h2>
-              Wählen Sie Ihren
-              <br />
-              <span>Einstieg.</span>
-            </h2>
-          </div>
+      <section className="taste-intro section" aria-labelledby="intro-title">
+        <h2 id="intro-title">
+          Außen klar.
+          <br />
+          Innen einfacher.
+        </h2>
+        <div>
+          <p>
+            Ihre Website soll erklären, was Sie anbieten. Ihr Shop soll den Weg
+            zum Produkt leicht machen. Und hinter den Kulissen sollen
+            Informationen weiterfließen, statt immer wieder abgetippt zu werden.
+          </p>
+          <p>
+            Wir setzen dort an, wo Sie heute Unterstützung brauchen. Mit einem
+            neuen Auftritt, einem besseren Ablauf oder beidem.
+          </p>
           <Link className="text-link" href="/leistungen">
-            Alle Leistungen <Arrow />
+            Unsere Leistungen <Arrow />
           </Link>
         </div>
-        <div className="studio-service-list">
-          {serviceGroups.map((group, i) => (
-            <Link
-              key={group.href}
-              className="studio-service-row"
-              href={group.href}
-            >
-              <span className="row-number">0{i + 1}</span>
-              <div>
-                <small>
-                  {i === 0
-                    ? "EIN AUFTRITT, DER ZU IHNEN PASST"
-                    : "WENIGER ROUTINE. MEHR FREIRAUM."}
-                </small>
-                <h3>{group.title}</h3>
-                <p>{group.text}</p>
-              </div>
-              {i === 0 ? (
-                <div className="mini-flow website-mini">
-                  <WebsiteArt />
-                </div>
-              ) : (
-                <MiniFlow variant={2} />
-              )}
-              <span className="service-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </Link>
-          ))}
-        </div>
       </section>
-      <section className="section studio-explorer" id="moeglichkeiten">
+      <section
+        className="taste-offers section"
+        id="leistungen"
+        aria-labelledby="offers-title"
+      >
+        <span id="entdecken" className="anchor-marker" aria-hidden="true" />
+        <div className="taste-offers-title">
+          <h2 id="offers-title">
+            Was möchten Sie
+            <br />
+            verbessern?
+          </h2>
+          <p>Zwei Bereiche. Ein durchdachter Zusammenhang.</p>
+        </div>
+        <article className="taste-offer taste-offer-web">
+          <div className="taste-offer-copy">
+            <h3>Websites & Shops</h3>
+            <p>
+              Ein Auftritt, der Ihr Angebot verständlich macht und Besucher zum
+              nächsten Schritt führt.
+            </p>
+            <ul>
+              <li>
+                <Link href="/leistungen/website-erstellung">
+                  Website erstellen <Arrow />
+                </Link>
+              </li>
+              <li>
+                <Link href="/leistungen/website-optimierung">
+                  Website optimieren & SEO <Arrow />
+                </Link>
+              </li>
+              <li>
+                <Link href="/leistungen/shopify-shop-erstellen">
+                  Shopify-Shop erstellen <Arrow />
+                </Link>
+              </li>
+              <li>
+                <Link href="/leistungen/shopify-migration">
+                  Zu Shopify wechseln <Arrow />
+                </Link>
+              </li>
+            </ul>
+            <Link
+              className="text-link"
+              href="/leistungen/websites-sichtbarkeit"
+            >
+              Zum Bereich Websites & Shops <Arrow />
+            </Link>
+          </div>
+          <div className="taste-offer-picture">
+            <Image
+              src="/images/konzept-website.png"
+              alt="Website-Gestaltungskonzept mit klarer Navigation und großem Einstiegsbereich"
+              width={1120}
+              height={780}
+              sizes="(max-width: 700px) 90vw, 55vw"
+            />
+            <p>Website-Konzept von Prozesswerk. Fiktives Beispiel.</p>
+          </div>
+        </article>
+        <article className="taste-offer taste-offer-process">
+          <div className="taste-offer-copy">
+            <h3>Prozesse & Automatisierung</h3>
+            <p>
+              Wiederkehrende Arbeit vereinfachen. Ihre vorhandenen Systeme
+              verbinden. Mit Regeln, die Ihr Team versteht.
+            </p>
+            <ul className="taste-process-list">
+              <li>Anfragen ins CRM übernehmen</li>
+              <li>Dokumente aus vorhandenen Daten vorbereiten</li>
+              <li>Aufgaben und Übergaben koordinieren</li>
+            </ul>
+            <p className="taste-offer-note">
+              Analyse, Umsetzung und Prüfung gehören zusammen. KI setzen wir
+              dort ein, wo sie für den vereinbarten Ablauf sinnvoll ist.
+            </p>
+            <Link
+              className="text-link"
+              href="/leistungen/prozesse-automatisierung"
+            >
+              Zum Bereich Automatisierung <Arrow />
+            </Link>
+          </div>
+          <div className="taste-offer-picture taste-process-picture">
+            <Image
+              src="/images/connected-process-v2.webp"
+              alt="Illustration: Eine Anfrage wird geprüft, im CRM zugeordnet und an das Team übergeben"
+              width={1536}
+              height={1024}
+              sizes="(max-width: 700px) 90vw, 55vw"
+            />
+            <p>Ein möglicher Ablauf. Ihr Team behält die Kontrolle.</p>
+          </div>
+        </article>
+      </section>
+      <section className="section taste-work" aria-labelledby="work-title">
+        <div className="taste-work-heading">
+          <h2 id="work-title">So kann es aussehen.</h2>
+          <p>
+            Gestaltung wird greifbar, wenn man sie sieht.
+            <br />
+            Zwei eigene Konzepte zum Durchklicken.
+          </p>
+        </div>
+        <div className="taste-work-grid">
+          <a
+            className="taste-work-item"
+            href="/konzepte/website.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/images/konzept-website.png"
+              alt="Werkraum: Website-Konzept für einen Handwerksbetrieb"
+              width={1120}
+              height={780}
+              sizes="(max-width: 700px) 90vw, 55vw"
+            />
+            <div>
+              <h3>Ein klarer Webauftritt</h3>
+              <span>
+                Konzept öffnen <Arrow />
+              </span>
+            </div>
+            <p>Seitenstruktur, Gestaltung und ein direkter Kontaktweg.</p>
+          </a>
+          <a
+            className="taste-work-item"
+            href="/konzepte/shop.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/images/konzept-shop-final.png"
+              alt="Alltag: Shop-Konzept mit Produktabbildung, Varianten und Produktdetails"
+              width={1120}
+              height={780}
+              sizes="(max-width: 700px) 90vw, 40vw"
+            />
+            <div>
+              <h3>Ein Produkt im Mittelpunkt</h3>
+              <span>
+                Konzept öffnen <Arrow />
+              </span>
+            </div>
+            <p>Ein übersichtlicher Einstieg in ein kleines Sortiment.</p>
+          </a>
+        </div>
+        <p className="taste-demo-note">
+          Gestaltungsbeispiele mit fiktiven Marken. Keine Kundenreferenzen; der
+          Shop ist eine Design-Demo ohne Kaufabwicklung.
+        </p>
+      </section>
+      <section
+        className="section studio-explorer taste-explorer"
+        id="moeglichkeiten"
+      >
         <div className="section-heading">
           <div>
-            <span className="eyebrow">
-              02 / AUTOMATISIERUNG AN EINEM BEISPIEL
-            </span>
             <h2>
-              So könnte es
+              Weniger Routine.
               <br />
-              <em>für Sie laufen.</em>
+              Mehr Überblick.
             </h2>
           </div>
           <p>
-            Entdecken Sie typische Abläufe hinter Ihrer Website.
-            <br />
-            Wählen Sie Ihren Bereich.
+            Wählen Sie ein Beispiel und vergleichen Sie die manuelle Arbeit mit
+            einem verbundenen Ablauf.
           </p>
         </div>
         <ProcessExplorer />
         <Link className="text-link examples-link" href="/beispiele">
-          Alle Beispielprozesse entdecken <Arrow />
+          Alle Prozessbeispiele <Arrow />
         </Link>
       </section>
-      <section className="section studio-process">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">03 / SO GEHT ES WEITER</span>
-            <h2>
-              Vom ersten Hallo.
-              <br />
-              Bis es <em>einfach läuft.</em>
-            </h2>
-          </div>
+      <section className="section taste-method" aria-labelledby="method-title">
+        <div>
+          <h2 id="method-title">
+            Von der Idee
+            <br />
+            in Ihren Alltag.
+          </h2>
           <Link className="text-link" href="/vorgehensweise">
             Unser Vorgehen <Arrow />
           </Link>
@@ -162,55 +253,52 @@ export default function Home() {
         <ol className="process-steps">
           {[
             [
-              "Zuhören",
-              "Wir klären Ihr Ziel: eine Website, einen Shop oder einen besseren Ablauf.",
+              "Verstehen",
+              "Wir klären Ziel, Ausgangslage und die Menschen, die später damit arbeiten.",
             ],
             [
-              "Klarheit schaffen",
-              "Sie erhalten einen Vorschlag mit Umfang, Kosten und einem konkreten Ziel.",
+              "Umfang festlegen",
+              "Sie erhalten einen Vorschlag mit Leistungen, Kosten und einem klaren Ziel.",
             ],
             [
-              "Umsetzen & testen",
-              "Wir setzen um. Sie prüfen mit uns Normalfälle und Ausnahmen.",
+              "Bauen & prüfen",
+              "Wir setzen um und testen die vereinbarten Abläufe, auch bei Ausnahmen.",
             ],
             [
               "Gut übergeben",
-              "Dokumentation, Zuständigkeiten und vereinbarte Betreuung sind geklärt.",
+              "Sie bekommen die Umsetzung, eine verständliche Dokumentation und klare Zuständigkeiten.",
             ],
-          ].map(([title, text], i) => (
+          ].map(([title, text]) => (
             <li key={title}>
-              <span>0{i + 1}</span>
               <h3>{title}</h3>
               <p>{text}</p>
             </li>
           ))}
         </ol>
       </section>
-      <section className="section project-scope">
+      <section className="section project-scope taste-scope">
         <div>
-          <span className="eyebrow">04 / UMFANG & KOSTEN</span>
           <h2>
-            Ein klares Angebot.
+            Erst Klarheit.
             <br />
-            <em>Vor der Umsetzung.</em>
+            Dann Umsetzung.
           </h2>
+          <p>Was Sie vor einer Beauftragung wissen sollten.</p>
         </div>
         <div>
           <p>
-            Der Preis hängt von Seitenumfang, Inhalten, Funktionen und
-            vorhandenen Systemen ab. Im Erstgespräch klären wir, was Sie
-            brauchen. Danach erhalten Sie einen Vorschlag mit Leistungsumfang
-            und Kosten.
+            Der Preis richtet sich nach Umfang, Inhalten, Funktionen und
+            bestehenden Systemen. Im kostenlosen Erstgespräch klären wir den
+            passenden Einstieg. Danach erhalten Sie ein konkretes Angebot.
           </p>
           <ul>
+            <li>Vereinbarte Leistungen und ein nachvollziehbarer Umfang.</li>
             <li>
-              Einmalige Umsetzung und laufende Kosten werden getrennt benannt.
+              Einmalige Umsetzung und laufende Kosten getrennt ausgewiesen.
             </li>
+            <li>Hosting, Shopify, Themes oder Apps vorab abgestimmt.</li>
             <li>
-              Hosting, Shopify, Themes oder Apps stimmen wir vorab mit Ihnen ab.
-            </li>
-            <li>
-              Eine ausführliche Prozessanalyse kann separat beauftragt werden.
+              Ausführliche Prozessanalysen bei Bedarf separat beauftragbar.
             </li>
           </ul>
           <Link href="/kontakt" className="text-link">
@@ -218,14 +306,9 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <section className="section faq-section studio-faq">
+      <section className="section faq-section studio-faq taste-faq">
         <div>
-          <span className="eyebrow">05 / GUT ZU WISSEN</span>
-          <h2>
-            Gute Fragen.
-            <br />
-            <em>Klare Antworten.</em>
-          </h2>
+          <h2>Gut zu wissen.</h2>
           <Link className="text-link" href="/faq">
             Alle Fragen <Arrow />
           </Link>

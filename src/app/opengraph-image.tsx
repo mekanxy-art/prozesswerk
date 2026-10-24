@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { company } from "@/lib/config";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const alt = "Websites. Online-Shops. Weniger Routine. – Prozesswerk";
+export const alt = "Digital. Gut verbunden. – Prozesswerk";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function Image() {
@@ -15,8 +15,8 @@ export default function Image() {
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 72,
-        background: "#20231f",
-        color: "#f1f0e9",
+        background: "#f3f3ec",
+        color: "#252d27",
         fontFamily: "sans-serif",
       }}
     >
@@ -27,14 +27,13 @@ export default function Image() {
         style={{
           display: "flex",
           flexDirection: "column",
-          fontSize: 72,
+          fontSize: 92,
           fontWeight: 700,
           letterSpacing: -4,
         }}
       >
-        <span>Websites.</span>
-        <span>Online-Shops.</span>
-        <span style={{ color: "#d8f087" }}>Weniger Routine.</span>
+        <span>Digital.</span>
+        <span>Gut verbunden.</span>
       </div>
       <div style={{ fontSize: 24 }}>
         Websites, Shopify und Automatisierung für Unternehmen

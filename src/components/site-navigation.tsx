@@ -114,7 +114,11 @@ function NavigationForPage({ name }: { name: string }) {
             aria-controls="studio-menu"
             onClick={() => setOpen(true)}
           >
-            Menü <span aria-hidden="true">☰</span>
+            Menü{" "}
+            <span className="menu-lines" aria-hidden="true">
+              <i />
+              <i />
+            </span>
           </button>
         </div>
       </header>

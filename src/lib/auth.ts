@@ -2,12 +2,18 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { randomBytes } from "node:crypto";
 import { db } from "./db";
-import { digest } from "./security";
+import { digest, originAllowed } from "./security";
 export async function checkOrigin() {
   const h = await headers();
-  const allowed = new URL(process.env.APP_ORIGIN || "http://localhost:3000")
-    .origin;
-  if (h.get("origin") !== allowed) throw new Error("ORIGIN_DENIED");
+  if (
+    !originAllowed(
+      h.get("origin"),
+      process.env.APP_ORIGIN,
+      process.env.NODE_ENV === "production",
+    )
+  ) {
+    throw new Error("ORIGIN_DENIED");
+  }
 }
 export async function currentAdmin() {
   const token = (await cookies()).get("pw_session")?.value;

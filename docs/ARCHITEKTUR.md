@@ -1,5 +1,7 @@
 # Architektur und Annahmen
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 ## Ausgangslage und Grenzen
 
 Leeres Projekt, keine Unternehmensdaten, kein Hostingkonto, keine echte Domain, kein E-Mail-Dienst und kein n8n-Endpunkt. Die Lösung wird lokal geliefert. Keine Veröffentlichung und keine externen Nachrichten sind autorisiert. Der sichtbare Name bleibt `[FIRMENNAME]`; „prozesswerk“ ist nur der Projektordner, keine behauptete Marke.

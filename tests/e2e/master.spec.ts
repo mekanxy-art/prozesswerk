@@ -119,7 +119,7 @@ test("native navigation, modal focus and text reflow remain usable", async ({
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Websites.",
+    "Digital.",
   );
   await expect(page.getByRole("heading", { level: 1 })).toHaveCSS(
     "opacity",

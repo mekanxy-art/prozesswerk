@@ -44,7 +44,26 @@ const examples = [
 ];
 export function ProcessExplorer() {
   const [active, setActive] = useState(0);
+  const [manual, setManual] = useState(false);
   const current = examples[active];
+  const manualSteps = [
+    [
+      ["Anfrage lesen", "Postfach einzeln prüfen"],
+      ["Daten übertragen", "Kontakt ins CRM abtippen"],
+      ["Team erinnern", "Nachricht separat verschicken"],
+    ],
+    [
+      ["Daten zusammensuchen", "Mehrere Quellen öffnen"],
+      ["Vorlage ausfüllen", "Angaben manuell übertragen"],
+      ["Prüfung organisieren", "Versionen und Freigaben abgleichen"],
+    ],
+    [
+      ["Auftrag nachlesen", "Freigabe im Postfach suchen"],
+      ["Projekt anlegen", "Ordner und Aufgaben einzeln erstellen"],
+      ["Unterlagen nachhalten", "Zuständigkeiten persönlich abstimmen"],
+    ],
+  ];
+  const shownSteps = manual ? manualSteps[active] : current.steps;
   return (
     <div className="process-explorer">
       <div
@@ -75,14 +94,54 @@ export function ProcessExplorer() {
           <small>Illustratives Beispiel · keine Kundenreferenz</small>
         </div>
         <div className="explorer-diagram" key={current.tag}>
+          <div
+            className="workflow-comparison"
+            role="group"
+            aria-label="Ablauf vergleichen"
+          >
+            <button
+              type="button"
+              aria-pressed={manual}
+              onClick={() => setManual(true)}
+            >
+              Heute manuell
+            </button>
+            <button
+              type="button"
+              aria-pressed={!manual}
+              onClick={() => setManual(false)}
+            >
+              Verbunden
+            </button>
+          </div>
           <span className="diagram-label">
-            SO GREIFT EIN SCHRITT IN DEN NÄCHSTEN
+            {manual
+              ? "Viele einzelne Handgriffe"
+              : "Ein Schritt greift in den nächsten"}
           </span>
           <ol>
-            {current.steps.map(([title, text], i) => (
+            {shownSteps.map(([title, text], i) => (
               <li key={title}>
                 <span className="diagram-step-icon" aria-hidden="true">
-                  {i === 0 ? "↙" : i === 1 ? "⋈" : "✓"}
+                  {i === 0 ? (
+                    "↙"
+                  ) : i === 1 ? (
+                    "⋈"
+                  ) : (
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="m5 12 4 4L19 6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  )}
                 </span>
                 <div>
                   <strong>{title}</strong>
@@ -94,7 +153,9 @@ export function ProcessExplorer() {
           </ol>
           <p>
             <span aria-hidden="true">↳</span>
-            {current.exception}
+            {manual
+              ? "Ein Beispiel für einen manuellen Ablauf. Ihr tatsächlicher Prozess kann abweichen."
+              : current.exception}
           </p>
         </div>
       </div>

@@ -1,4 +1,5 @@
 "use server";
+import { randomBytes } from "node:crypto";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -7,6 +8,8 @@ import { db } from "@/lib/db";
 import { checkOrigin, createSession, requireAdmin } from "@/lib/auth";
 import { clientIdentity, consumeRate } from "@/lib/rate-limit";
 import { digest, hashPassword, verifyPassword } from "@/lib/security";
+// Hash once, then verify once for known and unknown accounts alike.
+const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 export async function login(form: FormData) {
   await checkOrigin();
   const email = String(form.get("email") || "")
@@ -28,7 +31,7 @@ export async function login(form: FormData) {
   const admin = await db.admin.findUnique({ where: { email } });
   const valid = verifyPassword(
     password,
-    admin?.passwordHash || hashPassword("unusable-dummy-password"),
+    admin?.passwordHash || dummyPasswordHash,
   );
   if (!admin || !valid || admin.role !== "ADMIN") {
     await db.activity.create({

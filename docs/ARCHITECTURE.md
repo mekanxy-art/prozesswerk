@@ -1,6 +1,6 @@
 # Architektur
 
-Aktueller Portfolio-Überblick. Ältere Entwurfsdokumente im Ordner `docs` dokumentieren teilweise frühere Inhalts- und Formularstände; für den aktuellen Umfang sind README und Testprotokoll maßgeblich.
+Aktueller Portfolio-Überblick. Ältere Entwurfsdokumente im Ordner `docs` dokumentieren teilweise frühere Inhalts- und Formularstände; für den aktuellen Umfang sind README und [Veröffentlichungsbericht](RELEASE-2026-10-24.md) maßgeblich.
 
 ## Komponenten und Datenfluss
 
@@ -43,3 +43,9 @@ Erfolgreiche Speicherung und externe Zustellung sind unterschiedliche Zustände.
 Der Admin-Bereich ist serverseitig geschützt. Formulartoken, Origin-Prüfung, Limits, Passwort-Hashes und CSV-Absicherung sind technische Maßnahmen; die Tests ersetzen keinen unabhängigen Sicherheitsaudit.
 
 Das Dienstleistungsangebot ist Inhalt dieser Website. Shopify-Verwaltung, Migrationen fremder Shops und echte CRM-Workflows sind keine eingebauten Produktfunktionen dieses Repositorys.
+
+## Aktuelle Gestaltung und Schutzmaßnahmen
+
+Die aktuelle CSS-Reihenfolge steht in [DESIGN.md](../DESIGN.md). Die zwei HTML-/CSS-Konzepte unter `public/konzepte` sind unabhängig von Next.js als eigene öffentliche Beispiele erreichbar.
+
+Middleware erzeugt pro Anfrage eine Nonce und eine restriktive Produktions-CSP. Bestätigungs-/Widerrufsseiten verwenden `strict-origin`, damit Query-Tokens nicht im Referer weitergegeben werden und native POST-Anfragen ihre prüfbare Herkunft behalten. Produktionsanfragen benötigen eine gültige APP_ORIGIN. Inhaltsrouten werden über Map statt Objektprototypen aufgelöst.

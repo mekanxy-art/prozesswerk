@@ -5,3 +5,5 @@ package-lock.json
 local-data
 test-results
 playwright-report
+
+.taste-skill/

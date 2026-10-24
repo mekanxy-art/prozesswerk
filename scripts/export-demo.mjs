@@ -1,12 +1,20 @@
 /* global document, location */
 import { URL } from "node:url";
 import { Buffer } from "node:buffer";
-const client =
-  'const trigger=document.querySelector(".menu-trigger"), panel=document.querySelector("#studio-menu");\nlet saved=[];\nfunction closeMenu(){panel.hidden=true;trigger.setAttribute("aria-expanded","false");document.body.style.overflow="";for(const [e,v] of saved)e.inert=v;saved=[];trigger.focus();}\ntrigger?.addEventListener("click",()=>{panel.hidden=false;trigger.setAttribute("aria-expanded","true");saved=Array.from(document.body.children).filter(e=>e!==panel&&e.tagName!=="SCRIPT").map(e=>[e,e.inert]);for(const [e] of saved)e.inert=true;document.body.style.overflow="hidden";panel.querySelector("button").focus();});\npanel?.querySelector("button")?.addEventListener("click",closeMenu);\ndocument.addEventListener("keydown",e=>{if(!panel||panel.hidden)return;if(e.key==="Escape"){e.preventDefault();closeMenu();}if(e.key==="Tab"){const all=panel.querySelectorAll("a,button");const first=all[0],last=all[all.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});\nconst buttons=[...document.querySelectorAll(".explorer-switches button")];\nif(buttons.length)fetch("/explorer.json").then(r=>r.json()).then(panels=>buttons.forEach((button,i)=>button.addEventListener("click",()=>{buttons.forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));document.querySelector(".explorer-content").innerHTML=panels[i];})));\ndocument.querySelectorAll(".marquee-control").forEach(b=>b.addEventListener("click",()=>{const paused=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",String(paused));b.setAttribute("aria-label",paused?"Lauftext fortsetzen":"Lauftext pausieren");b.textContent=paused?"Weiter ▷":"Pause Ⅱ";b.closest(".studio-marquee").dataset.paused=String(paused);}));\ndocument.querySelectorAll("form").forEach(f=>f.addEventListener("submit",e=>e.preventDefault()));\n';
 import { chromium } from "@playwright/test";
-import { mkdir, writeFile, readdir, copyFile } from "node:fs/promises";
+import {
+  mkdir,
+  writeFile,
+  readdir,
+  copyFile,
+  readFile,
+} from "node:fs/promises";
 import path from "node:path";
 
+const client = await readFile(
+  new URL("./demo-client.mjs", import.meta.url),
+  "utf8",
+);
 const origin = process.env.TEST_BASE_URL || "http://127.0.0.1:3110";
 if (!/^http:\/\/(127\.0\.0\.1|localhost):\d+$/.test(origin))
   throw new Error("Use a local preview origin.");
@@ -44,14 +52,23 @@ try {
       .locator('a[href^="/"]')
       .evaluateAll((es) => es.map((e) => e.getAttribute("href")))) {
       const pathname = new URL(href, locationSafeOrigin()).pathname;
-      if (!visited.has(pathname) && !skip(pathname)) queue.push(pathname);
+      if (!visited.has(pathname) && !skip(pathname) && !path.extname(pathname))
+        queue.push(pathname);
     }
     await page.getByRole("button", { name: "Schließen" }).click();
     if (route === "/") {
       const buttons = page.locator(".explorer-switches button");
       for (let i = 0; i < (await buttons.count()); i++) {
         await buttons.nth(i).click();
-        explorer.push(await page.locator(".explorer-content").innerHTML());
+        const states = [];
+        for (const name of ["Verbunden", "Heute manuell"]) {
+          await page.getByRole("button", { name, exact: true }).click();
+          states.push(await page.locator(".explorer-content").innerHTML());
+        }
+        explorer.push(states);
+        await page
+          .getByRole("button", { name: "Verbunden", exact: true })
+          .click();
       }
       await buttons.first().click();
     }
@@ -136,7 +153,7 @@ try {
     for (const e of await readdir(dir, { withFileTypes: true })) {
       const r = path.join(rel, e.name);
       if (e.isDirectory()) await copyPublic(path.join(dir, e.name), r);
-      else if (!r.endsWith(".png")) {
+      else {
         const dest = path.join(output, r);
         await mkdir(path.dirname(dest), { recursive: true });
         await copyFile(path.join(dir, e.name), dest);

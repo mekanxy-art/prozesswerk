@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   csvCell,
+  originAllowed,
   formToken,
   verifyFormToken,
   hashPassword,
@@ -142,4 +143,42 @@ test("minimal contact request allows optional business data and a privacy notice
     leadSchema.safeParse({ ...input, privacy: "consent-not-given" }).success,
     false,
   );
+});
+
+test("production origin policy fails closed without configuration", () => {
+  assert.equal(originAllowed("http://localhost:3000", undefined, true), false);
+  assert.equal(
+    originAllowed(
+      "https://prozesswerk.example",
+      "https://prozesswerk.example",
+      true,
+    ),
+    true,
+  );
+  assert.equal(
+    originAllowed(
+      "https://prozesswerk.example.attacker.invalid",
+      "https://prozesswerk.example",
+      true,
+    ),
+    false,
+  );
+  assert.equal(originAllowed(null, "https://prozesswerk.example", true), false);
+  assert.equal(
+    originAllowed("null", "https://prozesswerk.example", true),
+    false,
+  );
+  assert.equal(
+    originAllowed(
+      "https://attacker.invalid",
+      "https://prozesswerk.example",
+      true,
+    ),
+    false,
+  );
+  assert.equal(
+    originAllowed("https://prozesswerk.example", "javascript:alert(1)", true),
+    false,
+  );
+  assert.equal(originAllowed("http://localhost:3000", undefined, false), true);
 });

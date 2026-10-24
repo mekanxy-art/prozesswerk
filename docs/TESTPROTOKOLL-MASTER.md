@@ -1,5 +1,7 @@
 # Testprotokoll – Master-Prompt-Überarbeitung
 
+> Historischer Entwicklungs- bzw. Prüfstand. Aussagen zu damaliger Gestaltung, Testzahlen und fehlenden Datenbankprüfungen gelten für diese Phase. Aktueller Stand: [Veröffentlichungsprüfung vom 24.10.2026](RELEASE-2026-10-24.md).
+
 Ausführung: 19.10.2026, 17:21:47 (Europe/Berlin). Status: **lokal geprüft, mit Einschränkungen für den Live-Betrieb**.
 
 ## Umgebung
@@ -12,25 +14,25 @@ Der erfolgreiche Build liegt in .next-master-final19. Für diese Windows-Prüfun
 
 17 bestanden, 0 unerwartete Fehler, 0 übersprungen, 0 instabile Ergebnisse. Laufzeit 28.1 Sekunden. Zwei zuvor zu weit gefasste Fehlermeldungs-Selektoren wurden auf das Formular begrenzt, um den eingebauten Next.js-Seitenankündiger nicht mit der Formularmeldung zu verwechseln; der abschließende Gesamtlauf ist erfolgreich.
 
-| Testfall | Ergebnis | Dauer |
-| --- | --- | --- |
-| process explorer switches examples and keeps a useful next step | Bestanden | 0.58 s |
-| service, solution and example layouts work at desktop and mobile sizes | Bestanden | 2.35 s |
-| inline errors preserve values and link to the invalid field | Bestanden | 0.50 s |
-| storage outage never reports success and keeps the message | Bestanden | 3.31 s |
-| no-JavaScript validation retains typed fields | Bestanden | 0.32 s |
-| expired or altered session is renewed without clearing the request | Bestanden | 3.37 s |
-| public routes, metadata, assets, headers and internal links work | Bestanden | 2.89 s |
-| main tasks fit 320, 390, tablet and desktop; preview form is honest | Bestanden | 3.75 s |
-| native navigation, modal focus and text reflow remain usable | Bestanden | 0.53 s |
+| Testfall                                                                | Ergebnis  | Dauer  |
+| ----------------------------------------------------------------------- | --------- | ------ |
+| process explorer switches examples and keeps a useful next step         | Bestanden | 0.58 s |
+| service, solution and example layouts work at desktop and mobile sizes  | Bestanden | 2.35 s |
+| inline errors preserve values and link to the invalid field             | Bestanden | 0.50 s |
+| storage outage never reports success and keeps the message              | Bestanden | 3.31 s |
+| no-JavaScript validation retains typed fields                           | Bestanden | 0.32 s |
+| expired or altered session is renewed without clearing the request      | Bestanden | 3.37 s |
+| public routes, metadata, assets, headers and internal links work        | Bestanden | 2.89 s |
+| main tasks fit 320, 390, tablet and desktop; preview form is honest     | Bestanden | 3.75 s |
+| native navigation, modal focus and text reflow remain usable            | Bestanden | 0.53 s |
 | scroll decoration never hides content and keyboard focus remains usable | Bestanden | 0.39 s |
 | reduced motion clears pending reveals and the moving text can be paused | Bestanden | 0.41 s |
-| service content and links remain readable without JavaScript | Bestanden | 0.29 s |
-| two service areas lead to their offers and the updated enquiry form | Bestanden | 0.61 s |
-| new service pages fit mobile and desktop and have accessible layouts | Bestanden | 4.90 s |
-| studio navigation supports pages, history, keyboard and reduced motion | Bestanden | 1.26 s |
-| studio home remains accessible and contained on narrow screens | Bestanden | 1.41 s |
-| service page stays contained at 320 pixels | Bestanden | 0.23 s |
+| service content and links remain readable without JavaScript            | Bestanden | 0.29 s |
+| two service areas lead to their offers and the updated enquiry form     | Bestanden | 0.61 s |
+| new service pages fit mobile and desktop and have accessible layouts    | Bestanden | 4.90 s |
+| studio navigation supports pages, history, keyboard and reduced motion  | Bestanden | 1.26 s |
+| studio home remains accessible and contained on narrow screens          | Bestanden | 1.41 s |
+| service page stays contained at 320 pixels                              | Bestanden | 0.23 s |
 
 Enthalten sind 320-, 390-, 768- und 1440-Pixel-Ansichten, automatische axe-Prüfungen mit WCAG-2.2-AA-Regeln auf repräsentativen Seiten, Navigation, Verlauf, native Direktlinks, Dialogfokus, progressive Formulare und reduzierte Bewegung. Alle registrierten öffentlichen Inhaltsseiten und Wissensartikel wurden mit Statuscode, eindeutigem Titel, Description und Canonical geprüft. Gesammelte interne Links, JSON-LD, 404, geschützter Export, CSP und Social-Bild wurden geprüft. Bei den öffentlichen Seitenaufrufen wurden im Browser keine Drittanbieteranfragen erfasst.
 
@@ -44,12 +46,12 @@ npm test: **10 von 10 bestanden**. Geprüft wurden signierte und zeitlich begren
 
 Lighthouse 13.5.0; Produktionsbuild auf Loopback, mobile Standardemulation und simulierte Drosselung. Messung nach den Funktionstests, ohne parallelen Testlauf.
 
-| Kategorie | Ergebnis |
-| --- | --- |
-| performance | 99/100 |
-| accessibility | 100/100 |
-| best-practices | 100/100 |
-| seo | 69/100 |
+| Kategorie      | Ergebnis |
+| -------------- | -------- |
+| performance    | 99/100   |
+| accessibility  | 100/100  |
+| best-practices | 100/100  |
+| seo            | 69/100   |
 
 - Largest Contentful Paint: 2.2 s.
 - Cumulative Layout Shift: 0.
