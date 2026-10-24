@@ -29,7 +29,7 @@ jobs:
       ALLOW_DATABASE_TESTS: "false"
       # FORM_SECRET intentionally absent: public tests expect a disabled form.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -101,7 +101,7 @@ jobs:
       FORM_SECRET: ci-only-form-secret-not-for-production-123
       RATE_LIMIT_SECRET: ci-only-rate-secret-not-for-production-456
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
