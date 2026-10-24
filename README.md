@@ -165,3 +165,7 @@ Es wurde noch keine eigene Open-Source-Lizenz vergeben. Abhängigkeiten behalten
 ## Repository-Prüfung vom 23.10.2026
 
 Der vollständige Projektstand wurde mit frisch installierten npm-Abhängigkeiten geprüft. Die automatische Prisma-Client-Erzeugung ist über `postinstall` hinterlegt. Typprüfung, Lint, 10 Unit-/Sicherheitstests, Produktionsbuild und 13 öffentliche Browsertests bestanden lokal. Die vier isolierten Formular-Fehlertests und Datenbank-Integrationstests wurden bei diesem Lauf nicht wiederholt. GitHub-Actions-Ergebnisse gelten jeweils für den dort geprüften Commit.
+
+## Gestaltung mit Open Design
+
+Die Gestaltung wurde anhand der Redesign- und Bewegungsleitfäden von Open Design überarbeitet. Quellen und Umsetzung: [Open-Design-Dokumentation](docs/OPEN-DESIGN.md). Farben, Typografie und Bedienregeln: [DESIGN.md](DESIGN.md).

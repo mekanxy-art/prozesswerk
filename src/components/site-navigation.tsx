@@ -128,7 +128,7 @@ function NavigationForPage({ name }: { name: string }) {
           aria-label="Seitenmenü"
         >
           <div className="menu-top">
-            <span>{name}®</span>
+            <span>{name}</span>
             <button
               onClick={() => {
                 setOpen(false);

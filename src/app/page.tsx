@@ -47,12 +47,27 @@ export default function Home() {
           </p>
         </div>
         <div className="hero-character">
-          <span className="character-note">
-            Hallo, ich verbinde. <span aria-hidden="true">↘</span>
-          </span>
+          <div className="hero-stage-heading">
+            <span>PROZESSWERK / GUT VERBUNDEN</span>
+            <span aria-hidden="true">↗</span>
+          </div>
+          <div className="hero-orbit" aria-hidden="true" />
           <Mascot className="hero-mascot" priority />
+          <span className="character-note">Hallo, ich verbinde.</span>
+          <div
+            className="hero-stage-flow"
+            aria-label="Beispiel: Von der Website über die Anfrage zum Ablauf"
+          >
+            <span>Website</span>
+            <b aria-hidden="true">→</b>
+            <span>Anfrage</span>
+            <b aria-hidden="true">→</b>
+            <span>
+              Ablauf <b aria-hidden="true">✓</b>
+            </span>
+          </div>
           <span className="character-caption">
-            <i className="status-dot" /> ALLES GUT VERBUNDEN.
+            EIN AUFTRITT. EIN DURCHDACHTER ABLAUF.
           </span>
         </div>
         <div className="hero-index">

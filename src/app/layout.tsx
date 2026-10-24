@@ -4,6 +4,7 @@ import { company, configured, siteUrl, indexable } from "@/lib/config";
 import "./globals.css";
 import "./design-v2.css";
 import "./studio.css";
+import "./open-design.css";
 import { PageTransitions } from "@/components/site-navigation";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

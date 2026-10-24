@@ -65,7 +65,7 @@ export function ProcessExplorer() {
         ))}
       </div>
       <div className="explorer-content" aria-live="polite" aria-atomic="true">
-        <div className="explorer-copy">
+        <div className="explorer-copy" key={current.label}>
           <span className="eyebrow">{current.tag}</span>
           <h3>{current.title}</h3>
           <p>{current.text}</p>
@@ -74,7 +74,7 @@ export function ProcessExplorer() {
           </Link>
           <small>Illustratives Beispiel · keine Kundenreferenz</small>
         </div>
-        <div className="explorer-diagram">
+        <div className="explorer-diagram" key={current.tag}>
           <span className="diagram-label">
             SO GREIFT EIN SCHRITT IN DEN NÄCHSTEN
           </span>

@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("scroll decoration never hides content and keyboard focus remains usable", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 800 });
+  await page.setViewportSize({ width: 1440, height: 600 });
   await page.goto("/leistungen");
   const first = page.locator(".offering-group").first();
   await expect(first).toHaveAttribute("data-reveal", "");
@@ -26,7 +26,7 @@ test("scroll decoration never hides content and keyboard focus remains usable", 
 test("reduced motion clears pending reveals and the moving text can be paused", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 800 });
+  await page.setViewportSize({ width: 1440, height: 600 });
   await page.goto("/leistungen");
   const first = page.locator(".offering-group").first();
   await expect(first).toHaveAttribute("data-reveal", "");
